@@ -53,7 +53,6 @@ class Player(Entity):
         self.magicSwitchTime = 0
 
         self.state = DOWN
-
         self.obstacles = obstacles
 
         self.stats = {
@@ -80,6 +79,7 @@ class Player(Entity):
 
         self.speed = self.stats[SPEED]
         self.health = self.stats[HEALTH]
+        self.health = 1000
         self.energy = self.stats[ENERGY]
         self.exp = 3000
         self.inExp = 3000
@@ -93,6 +93,9 @@ class Player(Entity):
 
         self.weaponAttackSound = pg.mixer.Sound('audio\\sword.wav')
         self.weaponAttackSound.set_volume(0.4)
+
+        self.finalScoreTextSurf = self.font.render('Your score:', True, 'white')
+        self.finalScoreTextRect = self.finalScoreTextSurf.get_rect(topleft=(40, 370))
 
     def input(self):
         if not self.isAttacking:
@@ -167,11 +170,9 @@ class Player(Entity):
         else:
             if ATTACK in self.state: self.state = self.state.replace('_' + ATTACK, '')
 
-    def getTotalWeaponDamage(self):
-        return self.stats[ATTACK] + WEAPONS[self.weapon]['damage']
+    def getTotalWeaponDamage(self): return self.stats[ATTACK] + WEAPONS[self.weapon]['damage']
 
-    def getTotalMagicDamage(self):
-        return self.stats[MAGIC] + MAGICS[self.magic]['strength']
+    def getTotalMagicDamage(self): return self.stats[MAGIC] + MAGICS[self.magic]['strength']
 
     def importAssets(self):
         subPath = 'graphics\\player\\'
@@ -254,22 +255,16 @@ class Player(Entity):
         self.image = animation[int(self.frameIndex)]
         self.rect = self.image.get_rect(center=self.hitbox.center)
 
-        if not self.isVulnerable:
-            self.image.set_alpha(self.getFlickerValue())
-        else:
-            self.image.set_alpha(255)
+        if not self.isVulnerable: self.image.set_alpha(self.getFlickerValue())
+        else: self.image.set_alpha(255)
 
     def energyRegen(self):
-        if self.energy < self.stats[ENERGY]:
-            self.energy += ENERGY_RECOVERY_RATE * self.stats[MAGIC]
-        else:
-            self.energy = self.stats[ENERGY]
+        if self.energy < self.stats[ENERGY]: self.energy += ENERGY_RECOVERY_RATE * self.stats[MAGIC]
+        else: self.energy = self.stats[ENERGY]
 
     def deathFunc(self):
         self.died = True
         self.level.inGame = self.level.inGameStart = self.level.inStartMenu = self.level.inSettingsMenu = False
-        self.finalScoreTextSurf = self.font.render('Your score:', True, 'white')
-        self.finalScoreTextRect = self.finalScoreTextSurf.get_rect(topleft=(40, 370))
         self.finalScoreSurf = self.font.render(str(abs(self.score)), True, 'white')
         self.finalScoreRect = self.finalScoreSurf.get_rect(center=(180, 430))
         

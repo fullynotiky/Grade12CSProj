@@ -24,21 +24,31 @@ class Game:
         self.mainSound.set_volume(self.startMenu.volume/100)
         self.mainSound.play(-1)
 
+        self.userEntered = ''
+
     def run(self):
         while True:
             for event in pg.event.get():
-                if event.type == pg.QUIT:
+                if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                     pg.quit()
                     exit()
 
                 if event.type == pg.KEYDOWN:
-                    if event.key == pg.K_c and not self.level.player.died:
+                    if event.key == pg.K_c and (not self.level.player.died) and (not self.level.gameWon):
                         self.level.inGame = not self.level.inGame
                         self.level.toggleUpgradeMenu()
 
-                    if event.key == pg.K_p:
-                        pg.quit()
-                        exit()
+                    if not self.level.loggedIn:
+                        key = event.unicode
+                        if key.isalnum() and ord(key) != 13 and len(self.userEntered) <= 15: self.userEntered += key
+
+                        if event.key == pg.K_RETURN:
+                            if len(self.userEntered) < 15:
+                                self.level.loggedIn = self.level.inGameStart = self.level.inStartMenu = True
+                                self.startMenu.setUser(self.userEntered)
+                            else: ...
+
+                        if event.key == pg.K_BACKSPACE: self.userEntered = self.userEntered[:-2]
 
                 if event.type == pg.MOUSEBUTTONDOWN:
                     currTime = pg.time.get_ticks()
@@ -49,28 +59,19 @@ class Game:
                             if rect.collidepoint(pos) and currTime - self.startMenu.clickTime > self.startMenu.clickCooldown:
                                 self.startMenu.startMenuCommands[index]()
 
-                    if self.level.inSettingsMenu or self.level.player.died:
+                    if self.level.inSettingsMenu or self.level.player.died or self.level.gameWon:
                         for index, rect in enumerate(self.startMenu.settingsMenuRects):
                             if rect.collidepoint(pos) and currTime - self.startMenu.clickTime > self.startMenu.clickCooldown:
                                 self.startMenu.settingsMenuCommands[index]()
 
                     if self.level.inGame:
-                        if self.level.ui.settingsRect.collidepoint(pos):
-                            self.level.startMenu.settingsFunc()
+                        if self.level.ui.settingsRect.collidepoint(pos): self.level.startMenu.settingsFunc()
 
             self.level.run()
-
-            currVolume = self.startMenu.volume / 100
-
-            self.mainSound.set_volume(currVolume)
-            self.level.player.weaponAttackSound.set_volume(currVolume)
-
-            for enemy in self.level.enemies:
-                enemy.hitSound.set_volume(currVolume)
-                enemy.deathSound.set_volume(currVolume)
-                enemy.attackSound.set_volume(currVolume)
+            self.mainSound.set_volume(self.startMenu.volume/100)
 
             if self.level.inGameStart or self.level.inSettingsMenu: self.startMenu.run()
+            if not self.level.loggedIn: self.startMenu.loginFunc(self.userEntered)
 
             pg.display.update()
             self.clock.tick(FPS)

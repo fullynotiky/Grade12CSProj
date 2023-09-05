@@ -13,7 +13,9 @@ def exitGame():
 
 class StartMenu:
     def __init__(self, level):
+        self.user = None
         self.displaySurf = pg.display.get_surface()
+
         self.largeFont = pg.font.Font(FONT, FONT_SIZE + 125)
         self.mediumFont = pg.font.Font(FONT, FONT_SIZE + 45)
         self.mediumSmallFont = pg.font.Font(FONT, FONT_SIZE + 25)
@@ -36,13 +38,13 @@ class StartMenu:
         self.settingsSurf = pg.transform.scale(self.settingsSurf, (220, 55))
         self.settingsRect = self.settingsSurf.get_rect(center=(120, 500))
 
-        self.settingsSelectedSurf = pg.transform.scale(pg.image.load('graphics\\ui\\selected.png').convert_alpha(),
-                                                       (305, 12))
+        self.settingsSelectedSurf = pg.transform.scale(pg.image.load('graphics\\ui\\selected.png').convert_alpha(), (305, 12))
         self.settingsSelectedRect = self.settingsRect.move((-45, 50))
 
-        self.userNameSurf = self.smallFont.render('USER: ', True, 'green')
+        self.userNameSurf = self.smallFont.render(f'USER: {self.user}', True, 'green')
         self.userNameRect = self.userNameSurf.get_rect(topleft=(10, 70))
-        self.highScoreSurf = self.smallFont.render(f'HIGHSCORE: {10}', True, 'white')
+
+        self.highScoreSurf = self.smallFont.render(f'HIGHSCORE: {self.level.highscore}', True, 'white')
         self.highScoreRect = self.highScoreSurf.get_rect(topleft=(10, 100))
 
         self.spriteSurf = pg.transform.scale(pg.image.load('graphics\\startmenu\\1.png').convert_alpha(), (300, 320))
@@ -73,7 +75,7 @@ class StartMenu:
 
         self.transparentOverlay = pg.Surface((WIDTH, HEIGHT))
         self.transparentOverlay.fill('black')
-        self.transparentOverlay.set_alpha(180)
+        self.transparentOverlay.set_alpha(90)
 
         self.canClick = True
         self.clickCooldown = 300
@@ -86,6 +88,33 @@ class StartMenu:
 
         self.level.inGame = False
 
+        self.blackTransparentOverlay = pg.Surface((WIDTH, HEIGHT))
+        self.blackTransparentOverlay.fill('black')
+        self.blackTransparentOverlay.set_alpha(20)
+
+        self.loginSurf = pg.image.load('graphics\\ui\\login.png')
+        self.loginSurf = pg.transform.scale(self.loginSurf, (WIDTH+10, HEIGHT+50))
+
+        self.entrySurf = pg.Surface((300, 50))
+        self.entryRect = self.entrySurf.get_rect(center=(WIDTH//2, 350))
+        self.entrySurf.fill('white')
+
+        self.userSurf = self.smallFont.render('enter username:', True, 'white')
+
+    def loginFunc(self, userEntered):
+        text = self.smallFont.render(userEntered, True, 'black')
+
+        self.displaySurf.blit(self.loginSurf, (-10, 0))
+        self.displaySurf.blit(self.blackTransparentOverlay, (0, 0))
+        self.displaySurf.blit(self.gameNameSurf, self.gameNameRect)
+
+        self.displaySurf.blit(self.entrySurf, self.entryRect)
+        self.displaySurf.blit(text, (500, 335))
+        pg.draw.rect(self.displaySurf, 'black', (490, 295, 270, 30))
+        self.displaySurf.blit(self.userSurf, (495, 295))
+
+        # self.displaySurf.blit(self.userSurf, self.userRect)
+
     def playFunc(self):
         self.level.inGameStart = False
         self.level.inGame = True
@@ -97,26 +126,32 @@ class StartMenu:
         else: self.volume = self.volume2
 
     def input(self):
-        keys = pg.key.get_pressed()
         currTime = pg.time.get_ticks()
 
-        if currTime - self.clickTime >= self.volumeCoolDown:
-            if keys[pg.K_UP]:
-                self.volume += 5
-                self.clickTime = pg.time.get_ticks()
-                if self.volume >= 100:
-                    self.volume = 100
+        if self.level.loggedIn:
+            keys = pg.key.get_pressed()
+            if currTime - self.clickTime >= self.volumeCoolDown:
+                if keys[pg.K_UP]:
+                    self.volume += 5
+                    self.clickTime = pg.time.get_ticks()
+                    if self.volume >= 100:
+                        self.volume = 100
 
-            if keys[pg.K_DOWN]:
-                self.volume -= 5
-                self.clickTime = pg.time.get_ticks()
-                if self.volume <= 0:
-                    self.volume = 0
+                if keys[pg.K_DOWN]:
+                    self.volume -= 5
+                    self.clickTime = pg.time.get_ticks()
+                    if self.volume <= 0:
+                        self.volume = 0
 
     def settingsFunc(self):
         self.clickTime = pg.time.get_ticks()
         self.level.inStartMenu = not self.level.inStartMenu
         self.level.inSettingsMenu = not self.level.inSettingsMenu
+
+    def setUser(self, name: str):
+        self.user = name
+        self.userNameSurf = self.smallFont.render(f'USER: {self.user}', True, 'green')
+        self.userNameRect = self.userNameSurf.get_rect(topleft=(10, 70))
 
     def updateVolume(self, value: int):
         barLen = self.volumeFrameRect.bottom - self.volumeFrameRect.top - 200
@@ -149,12 +184,12 @@ class StartMenu:
         if settingsSelected: self.displaySurf.blit(self.settingsSelectedSurf, self.settingsSelectedRect)
 
     def run(self):
-        if self.level.inGameStart:
-            self.displayMainOverlay(self.level.inSettingsMenu)
+        self.displayMainOverlay(self.level.inSettingsMenu)
 
-            if self.level.inStartMenu:
-                self.displayStartMenu()
+        if self.level.inStartMenu:
+            self.displayStartMenu()
 
         if self.level.inSettingsMenu:
             self.displaySettingsMenu()
+
         self.input()
