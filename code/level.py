@@ -22,8 +22,9 @@ chdir('E:\\Harshith\\Python Programming\\School Stuff\\School Project')
 
 
 class Level:
-    def __init__(self) -> None:
+    def __init__(self, game) -> None:
 
+        self.game = game
         self.dayNum = 0
         self.alpha = 0
         self.enemies = []
@@ -34,7 +35,7 @@ class Level:
         self.inGame = False
         self.gameWon = False
         self.loggedIn = False
-        self.username = ''
+        self.username = self.game.username
         self.highscore = 0
         self.display = pg.display.get_surface()
         self.dayNightSurf = pg.Surface((WIDTH, HEIGHT))
@@ -211,8 +212,8 @@ class Level:
 
         self.display.blit(finalScoreSurf, finalScoreRect)
 
-        self.display.blit(self.startMenu.userNameSurf, self.startMenu.userNameRect.move(0, 0))
-        self.display.blit(self.startMenu.highScoreSurf, self.startMenu.highScoreRect.move(0, 0))
+        self.display.blit(self.startMenu.userNameSurf, self.startMenu.userNameRect.move(0, 100))
+        self.display.blit(self.startMenu.highScoreSurf, self.startMenu.highScoreRect.move(0, 100))
 
     def endGameFunc(self):
         self.gameEndOverlay()
@@ -228,6 +229,11 @@ class Level:
         self.display.blit(self.deadPlayerSurf, self.deadPlayerRect)
         self.display.blit(self.gameOverSurf, self.gameOverRect)
         self.display.blit(self.youDiedSurf, self.youDiedRect)
+
+    def loginFunc(self):
+        self.loggedIn = self.inStartMenu = self.inGameStart = True
+        self.startMenu.setUser(self.game.username)
+        print(self.startMenu.user)
 
     def run(self):
         currVolume = self.startMenu.volume / 100
@@ -250,6 +256,7 @@ class Level:
                 self.upgrade.display()
 
             elif self.inGame and self.inSettingsMenu:
+                self.inStartMenu = False
                 self.startMenu.run()
                 self.ui.displaySettingsButton()
                 self.displayScore()
@@ -269,3 +276,6 @@ class Level:
                 self.leavesOverlay.run()
 
                 if self.loggedIn: self.dayNightFunc()
+
+        debug(f'inGame:{self.inGame}, inSettingsMenu: {self.inSettingsMenu}, inGameStart:{self.inGameStart}, inStartMenu:{self.inStartMenu},\
+ loggedIn:{self.loggedIn}, user:{self.username}')

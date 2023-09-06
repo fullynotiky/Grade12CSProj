@@ -13,7 +13,7 @@ def exitGame():
 
 class StartMenu:
     def __init__(self, level):
-        self.user = None
+        self.user = ''
         self.displaySurf = pg.display.get_surface()
 
         self.largeFont = pg.font.Font(FONT, FONT_SIZE + 125)
@@ -78,7 +78,6 @@ class StartMenu:
         self.transparentOverlay.set_alpha(90)
 
         self.canClick = True
-        self.clickCooldown = 300
         self.clickTime = 0
 
         self.volume = 10
@@ -101,7 +100,7 @@ class StartMenu:
 
         self.userSurf = self.smallFont.render('enter username:', True, 'white')
 
-    def loginFunc(self, userEntered):
+    def displayLoginPage(self, userEntered):
         text = self.smallFont.render(userEntered, True, 'black')
 
         self.displaySurf.blit(self.loginSurf, (-10, 0))
@@ -113,10 +112,9 @@ class StartMenu:
         pg.draw.rect(self.displaySurf, 'black', (490, 295, 270, 30))
         self.displaySurf.blit(self.userSurf, (495, 295))
 
-        # self.displaySurf.blit(self.userSurf, self.userRect)
-
     def playFunc(self):
         self.level.inGameStart = False
+        self.level.inStartMenu = False
         self.level.inGame = True
 
     def muteFunc(self):
@@ -177,9 +175,9 @@ class StartMenu:
 
     def displayMainOverlay(self, settingsSelected: bool):
         self.displaySurf.blit(self.transparentOverlay, (0, 0))
-        self.displaySurf.blit(self.userNameSurf, self.userNameRect)
         self.displaySurf.blit(self.highScoreSurf, self.highScoreRect)
         self.displaySurf.blit(self.settingsSurf, self.settingsRect)
+        self.displaySurf.blit(self.userNameSurf, self.userNameRect)
 
         if settingsSelected: self.displaySurf.blit(self.settingsSelectedSurf, self.settingsSelectedRect)
 

@@ -16,15 +16,16 @@ class Game:
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption('Zelda')
 
+        self.username = ''
+        self.clickCooldown = 300
+
         self.clock = pg.time.Clock()
-        self.level = Level()
+        self.level = Level(self)
         self.startMenu = StartMenu(self.level)
 
         self.mainSound = pg.mixer.Sound('audio\\main.ogg')
         self.mainSound.set_volume(self.startMenu.volume/100)
         self.mainSound.play(-1)
-
-        self.userEntered = ''
 
     def run(self):
         while True:
@@ -34,21 +35,19 @@ class Game:
                     exit()
 
                 if event.type == pg.KEYDOWN:
-                    if event.key == pg.K_c and (not self.level.player.died) and (not self.level.gameWon):
-                        self.level.inGame = not self.level.inGame
+                    if event.key == pg.K_c and (self.level.player.died or self.level.gameWon or self.level.loggedIn):
                         self.level.toggleUpgradeMenu()
 
                     if not self.level.loggedIn:
                         key = event.unicode
-                        if key.isalnum() and ord(key) != 13 and len(self.userEntered) <= 15: self.userEntered += key
+                        if key.isalnum() and ord(key) != 13 and len(self.username) <= 15: self.username += key
 
                         if event.key == pg.K_RETURN:
-                            if len(self.userEntered) < 15:
-                                self.level.loggedIn = self.level.inGameStart = self.level.inStartMenu = True
-                                self.startMenu.setUser(self.userEntered)
+                            if len(self.username) < 15:
+                                self.level.loginFunc()
                             else: ...
 
-                        if event.key == pg.K_BACKSPACE: self.userEntered = self.userEntered[:-2]
+                        if event.key == pg.K_BACKSPACE: self.username = self.username[:-2]
 
                 if event.type == pg.MOUSEBUTTONDOWN:
                     currTime = pg.time.get_ticks()
@@ -56,12 +55,12 @@ class Game:
 
                     if self.level.inStartMenu:
                         for index, rect in enumerate(self.startMenu.startMenuRects):
-                            if rect.collidepoint(pos) and currTime - self.startMenu.clickTime > self.startMenu.clickCooldown:
+                            if rect.collidepoint(pos) and currTime - self.startMenu.clickTime > self.clickCooldown:
                                 self.startMenu.startMenuCommands[index]()
 
                     if self.level.inSettingsMenu or self.level.player.died or self.level.gameWon:
                         for index, rect in enumerate(self.startMenu.settingsMenuRects):
-                            if rect.collidepoint(pos) and currTime - self.startMenu.clickTime > self.startMenu.clickCooldown:
+                            if rect.collidepoint(pos) and currTime - self.startMenu.clickTime > self.clickCooldown:
                                 self.startMenu.settingsMenuCommands[index]()
 
                     if self.level.inGame:
@@ -71,7 +70,7 @@ class Game:
             self.mainSound.set_volume(self.startMenu.volume/100)
 
             if self.level.inGameStart or self.level.inSettingsMenu: self.startMenu.run()
-            if not self.level.loggedIn: self.startMenu.loginFunc(self.userEntered)
+            if not self.level.loggedIn: self.startMenu.displayLoginPage(self.username)
 
             pg.display.update()
             self.clock.tick(FPS)
