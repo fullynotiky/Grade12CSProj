@@ -4,7 +4,7 @@ import pygame as pg
 
 from settings import *
 
-chdir('E:\\Harshith\\Python Programming\\School Stuff\\School Project')
+chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
 
 class Tile(pg.sprite.Sprite):

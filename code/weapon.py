@@ -2,6 +2,10 @@ import pygame as pg
 
 from player import Player
 from settings import *
+from os import chdir
+
+
+chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
 
 class Weapon(pg.sprite.Sprite):
@@ -12,7 +16,10 @@ class Weapon(pg.sprite.Sprite):
         direction = player.state.split('_')[0]
         path = f'graphics\\weapons\\{player.weapon}\\{direction}.png'
 
-        self.image = pg.image.load(path).convert_alpha()
+        if player.weapon == AXE and direction == LEFT: self.image = pg.transform.rotozoom(pg.image.load(path).convert_alpha(),
+                                                                                          180,
+                                                                                          1)
+        else: self.image = pg.image.load(path).convert_alpha()
 
         if direction == RIGHT: self.rect = self.image.get_rect(midleft=player.rect.midright + pg.Vector2(0, 16))
         elif direction == LEFT: self.rect = self.image.get_rect(midright=player.rect.midleft + pg.Vector2(0, 16))

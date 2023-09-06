@@ -6,7 +6,7 @@ from entity import Entity
 from settings import *
 from utils import *
 
-chdir('E:\\Harshith\\Python Programming\\School Stuff\\School Project')
+chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
 
 class Player(Entity):

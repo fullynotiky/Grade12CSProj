@@ -3,7 +3,7 @@ from upgrade import Item
 from settings import *
 from os import chdir
 
-chdir('E:\\Harshith\\Python Programming\\School Stuff\\School Project\\graphics')
+chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj\\graphics')
 
 
 def exitGame():

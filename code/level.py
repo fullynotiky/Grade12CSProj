@@ -18,7 +18,7 @@ from weapon import Weapon
 from leavesOverlay import Leaves
 from startMenu import StartMenu
 
-chdir('E:\\Harshith\\Python Programming\\School Stuff\\School Project')
+chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
 
 class Level:
