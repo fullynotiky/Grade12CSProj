@@ -21,13 +21,8 @@ class Player(Entity):
 
         super().__init__(groups)
 
-        self.finalScoreRect = None
-        self.finalScoreSurf = None
+        self.finalScoreRect = self.finalScoreSurf = self.animations = self.finalScoreTextSurf = self.won = self.died = None
         self.finalScoreTextRect = None
-        self.finalScoreTextSurf = None
-        self.died = None
-        self.animations = None
-        self.won = False
         self.font = pg.font.Font(FONT, FONT_SIZE + 25)
         self.image = pg.image.load('graphics\\test\\player.png').convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
