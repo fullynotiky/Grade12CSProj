@@ -17,6 +17,7 @@ from debug import debug
 from weapon import Weapon
 from leavesOverlay import Leaves
 from startMenu import StartMenu
+from playerScores import GameData
 
 chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
@@ -24,6 +25,8 @@ chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 class Level:
     def __init__(self, game) -> None:
 
+        self.gameHighscore = 0
+        self.gameData = None
         self.game = game
         self.dayNum = 0
         self.alpha = 0
@@ -36,7 +39,7 @@ class Level:
         self.gameWon = False
         self.loggedIn = False
         self.username = self.game.username
-        self.highscore = 0
+        self.playerHighscore = ''
         self.display = pg.display.get_surface()
         self.dayNightSurf = pg.Surface((WIDTH, HEIGHT))
         self.dayNightSurf.fill('black')
@@ -148,7 +151,7 @@ class Level:
         if style == HEAL: self.magicPlayer.heal(strength, cost, (self.visibleSprites,))
         if style == FLAME: self.magicPlayer.flame(cost, (self.visibleSprites, self.attackSprites))
 
-    def destroyWeapon(self):
+    def destroyWeapon(self): 
         if self.currentWeapon: self.currentWeapon.kill()
         self.currentWeapon = None
 
@@ -217,7 +220,7 @@ class Level:
 
     def endGameFunc(self):
         self.gameEndOverlay()
-        if self.player.score > self.highscore: self.highscore = self.player.score
+        if self.player.score > self.playerHighscore: self.playerHighscore = self.player.score
         self.gameWon = True
         self.inGame = self.inStartMenu = self.inGameStart = self.gamePaused = False
         self.display.blit(self.startMenu.gameNameSurf, self.startMenu.gameNameRect)
@@ -230,10 +233,17 @@ class Level:
         self.display.blit(self.gameOverSurf, self.gameOverRect)
         self.display.blit(self.youDiedSurf, self.youDiedRect)
 
-    def loginFunc(self):
+    def loginFunc(self, username: str):
         self.loggedIn = self.inStartMenu = self.inGameStart = True
-        self.startMenu.setUser(self.game.username)
+        self.startMenu.setUser(username)
+        self.gameData = GameData(username)
+        self.playerHighscore = self.gameData.playerHighscore
+        self.gameHighscore = self.gameData.gameHighscore
+        self.startMenu.highScoreSurf = self.startMenu.smallFont.render(f'HIGHSCORE: {self.playerHighscore}', True, 'white')
         print(self.startMenu.user)
+
+    def checkInput(self):
+        self.startMenu.input()
 
     def run(self):
         currVolume = self.startMenu.volume / 100
@@ -246,29 +256,35 @@ class Level:
             enemy.attackSound.set_volume(currVolume)
 
         if self.loggedIn:
+            print('logged in')
             self.visibleSprites.draw(self.player)
             self.ui.display()
 
-            if self.inGameStart:
+            if self.inGameStart or self.inSettingsMenu:
                 self.startMenu.run()
+                self.checkInput()
 
             elif self.gamePaused:
+                print('in upgrade menu')
                 self.upgrade.display()
 
             elif self.inGame and self.inSettingsMenu:
+                print('in game and settings')
                 self.inStartMenu = False
-                self.startMenu.run()
                 self.ui.displaySettingsButton()
                 self.displayScore()
 
             elif self.player.died:
+                print('player died')
                 self.playerDeath()
                 self.displayScore()
 
-            elif self.dayNum >= 5:
+            elif self.dayNum >= 2:
+                print('2days up')
                 self.endGameFunc()
 
             else:
+                print('ELSE')
                 self.displayScore()
                 self.visibleSprites.update()
                 self.visibleSprites.updateEnemy(self.player)
@@ -277,5 +293,7 @@ class Level:
 
                 if self.loggedIn: self.dayNightFunc()
 
-        debug(f'inGame:{self.inGame}, inSettingsMenu: {self.inSettingsMenu}, inGameStart:{self.inGameStart}, inStartMenu:{self.inStartMenu},\
- loggedIn:{self.loggedIn}, user:{self.username}')
+        else: self.startMenu.displayLoginPage(self.game.username)
+
+        debug(f'igame:{self.inGame}, seting: {self.inSettingsMenu}, igameStrt:{self.inGameStart}, strtmen:{self.inStartMenu},\
+ logd:{self.loggedIn}, user:{self.game.username}, died:{self.player.died}')

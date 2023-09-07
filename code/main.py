@@ -4,6 +4,7 @@ import pygame as pg
 
 from level import Level
 from startMenu import StartMenu
+from playerScores import GameData
 from settings import *
 
 chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
@@ -14,14 +15,14 @@ class Game:
         pg.init()
 
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
-        pg.display.set_caption('Zelda')
+        pg.display.set_caption("Grade12CSProj")
 
         self.username = ''
         self.clickCooldown = 300
 
         self.clock = pg.time.Clock()
         self.level = Level(self)
-        self.startMenu = StartMenu(self.level)
+        self.startMenu = self.level.startMenu
 
         self.mainSound = pg.mixer.Sound('audio\\main.ogg')
         self.mainSound.set_volume(self.startMenu.volume/100)
@@ -44,7 +45,7 @@ class Game:
 
                         if event.key == pg.K_RETURN:
                             if len(self.username) < 15:
-                                self.level.loginFunc()
+                                self.level.loginFunc(self.username)
                             else: ...
 
                         if event.key == pg.K_BACKSPACE: self.username = self.username[:-2]
@@ -68,9 +69,6 @@ class Game:
 
             self.level.run()
             self.mainSound.set_volume(self.startMenu.volume/100)
-
-            if self.level.inGameStart or self.level.inSettingsMenu: self.startMenu.run()
-            if not self.level.loggedIn: self.startMenu.displayLoginPage(self.username)
 
             pg.display.update()
             self.clock.tick(FPS)

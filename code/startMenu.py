@@ -44,7 +44,7 @@ class StartMenu:
         self.userNameSurf = self.smallFont.render(f'USER: {self.user}', True, 'green')
         self.userNameRect = self.userNameSurf.get_rect(topleft=(10, 70))
 
-        self.highScoreSurf = self.smallFont.render(f'HIGHSCORE: {self.level.highscore}', True, 'white')
+        self.highScoreSurf = self.smallFont.render(f'HIGHSCORE: {self.level.playerHighscore}', True, 'white')
         self.highScoreRect = self.highScoreSurf.get_rect(topleft=(10, 100))
 
         self.spriteSurf = pg.transform.scale(pg.image.load('graphics\\startmenu\\1.png').convert_alpha(), (300, 320))
@@ -188,6 +188,7 @@ class StartMenu:
             self.displayStartMenu()
 
         if self.level.inSettingsMenu:
+            print('insettingss')
             self.displaySettingsMenu()
 
         self.input()

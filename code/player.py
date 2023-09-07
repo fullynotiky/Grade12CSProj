@@ -21,7 +21,8 @@ class Player(Entity):
 
         super().__init__(groups)
 
-        self.finalScoreRect = self.finalScoreSurf = self.animations = self.finalScoreTextSurf = self.won = self.died = None
+        self.finalScoreRect = self.finalScoreSurf = self.animations = self.finalScoreTextSurf = None
+        self.won = self.died = False
         self.finalScoreTextRect = None
         self.font = pg.font.Font(FONT, FONT_SIZE + 25)
         self.image = pg.image.load('graphics\\test\\player.png').convert_alpha()
@@ -74,7 +75,7 @@ class Player(Entity):
 
         self.speed = self.stats[SPEED]
         self.health = self.stats[HEALTH]
-        self.health = 400
+        self.health = 4
         self.energy = self.stats[ENERGY]
         self.exp = 3000
         self.inExp = 3000
