@@ -75,7 +75,7 @@ class Player(Entity):
 
         self.speed = self.stats[SPEED]
         self.health = self.stats[HEALTH]
-        self.health = 4
+        self.health = 300
         self.energy = self.stats[ENERGY]
         self.exp = 3000
         self.inExp = 3000

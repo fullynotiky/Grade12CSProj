@@ -1,12 +1,15 @@
 {
   "harshith": {
-    "highscore" : 100,
-    "scores": [100],
-    "daysAlive": 100
+    "highscore": 100,
+    "scores": [
+      100
+    ]
   },
-  "iky" : {
-    "highscore": 200,
-    "scores" : [200],
-    "daysAlive" : 200
+  "iky": {
+    "highscore": 780,
+    "scores": [
+      200,
+      780
+    ]
   }
 }

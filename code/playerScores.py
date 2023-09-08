@@ -8,34 +8,46 @@ def getAllPlayerData():
 
 class GameData:
     def __init__(self, playerName: str):
-        self.playerHighscore = self.playerDaysAlive = 0
+        self.playerHighscore = 0
         self.playerName = playerName
         self.allPlayerData = getAllPlayerData()
         self.gameHighscore = self.getStats()
 
-        if self.playerName not in self.allPlayerData:
-            self.addNewPlayer(self.playerName)
-
+        if self.playerName not in self.allPlayerData: self.addNewPlayer(self.playerName)
         self.playerData = self.allPlayerData[self.playerName]
 
-        print(json.dumps(self.allPlayerData, indent=1), self.playerHighscore, self.gameHighscore)
-
     def getStats(self):
-        highscores = []
+        allHighscores = []
         for name in self.allPlayerData:
             currPlayerDate = self.allPlayerData[name]
             highscore = currPlayerDate['highscore']
-            daysAlive = currPlayerDate['daysAlive']
-            highscores.append(highscore)
+            allHighscores.append(highscore)
             if name == self.playerName:
                 self.playerHighscore = highscore
-                self.playerDaysAlive = daysAlive
 
-        return max(highscores)
+        return max(allHighscores)
 
     def addNewPlayer(self, playerName: str):
         self.allPlayerData[playerName] = {
-            "playerHighscore": 0,
-            "scores": [0],
-            "daysAlive": 0
+            'highscore': 0,
+            'scores': []
         }
+
+    def updateHighscores(self):
+        for name in self.allPlayerData:
+            scores = []
+            scores.extend(self.allPlayerData[name])
+
+    def end(self, player):
+        self.allPlayerData[self.playerName]['scores'].append(abs(player.score))
+        newHighscore = max(self.allPlayerData[self.playerName]['scores'])
+        self.allPlayerData[self.playerName]['highscore'] = newHighscore
+
+        if newHighscore > self.playerHighscore:
+            player.level.startMenu.highScoreSurf = player.level.startMenu.smallFont.render(f'HIGHSCORE: {self.playerHighscore}',
+                                                                                           True,
+                                                                                           'white')
+
+        with open('code\\playerData.json', 'w') as file:
+            json.dump(self.allPlayerData, file, indent=2)
+            file.write('\n')

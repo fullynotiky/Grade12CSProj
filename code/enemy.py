@@ -35,6 +35,7 @@ class Enemy(Entity):
         self.spriteType = ENEMY
         self.player = player
 
+        # noinspection PyUnresolvedReferences
         self.image = self.animations[self.state][self.frameIndex]
         self.rect: pg.Rect = self.image.get_rect(topleft=pos)
 

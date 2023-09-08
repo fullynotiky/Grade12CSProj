@@ -1,14 +1,10 @@
-import pygame as pg
-from upgrade import Item
-from settings import *
 from os import chdir
 
+import pygame as pg
+
+from settings import *
+
 chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj\\graphics')
-
-
-def exitGame():
-    pg.quit()
-    exit()
 
 
 class StartMenu:
@@ -71,7 +67,7 @@ class StartMenu:
         self.startMenuCommands = (self.settingsFunc, self.playFunc)
 
         self.settingsMenuRects = (self.settingsRect, self.muteButtonRect, self.exitButtonRect)
-        self.settingsMenuCommands = (self.settingsFunc, self.muteFunc, exitGame)
+        self.settingsMenuCommands = (self.settingsFunc, self.muteFunc, self.level.exitFunc)
 
         self.transparentOverlay = pg.Surface((WIDTH, HEIGHT))
         self.transparentOverlay.fill('black')
@@ -143,7 +139,7 @@ class StartMenu:
 
     def settingsFunc(self):
         self.clickTime = pg.time.get_ticks()
-        self.level.inStartMenu = not self.level.inStartMenu
+        if not self.level.inGame: self.level.inStartMenu = not self.level.inStartMenu
         self.level.inSettingsMenu = not self.level.inSettingsMenu
 
     def setUser(self, name: str):
@@ -188,7 +184,6 @@ class StartMenu:
             self.displayStartMenu()
 
         if self.level.inSettingsMenu:
-            print('insettingss')
             self.displaySettingsMenu()
 
         self.input()

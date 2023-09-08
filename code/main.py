@@ -3,8 +3,6 @@ from os import chdir
 import pygame as pg
 
 from level import Level
-from startMenu import StartMenu
-from playerScores import GameData
 from settings import *
 
 chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
@@ -32,8 +30,7 @@ class Game:
         while True:
             for event in pg.event.get():
                 if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                    pg.quit()
-                    exit()
+                    self.level.exitFunc()
 
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_c and (self.level.player.died or self.level.gameWon or self.level.loggedIn):
@@ -68,7 +65,6 @@ class Game:
                         if self.level.ui.settingsRect.collidepoint(pos): self.level.startMenu.settingsFunc()
 
             self.level.run()
-            self.mainSound.set_volume(self.startMenu.volume/100)
 
             pg.display.update()
             self.clock.tick(FPS)
