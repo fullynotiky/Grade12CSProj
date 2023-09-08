@@ -2,7 +2,7 @@ from os import chdir
 
 import pygame as pg
 
-from settings import *
+from globals import *
 
 chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
@@ -15,7 +15,7 @@ class Tile(pg.sprite.Sprite):
         self.image = surf
         yOffset = HITBOX_OFFSET[self.spriteType]
 
-        if type == OBJECT:
+        if type == 'object':
             self.rect = self.image.get_rect(topleft=(pos[0], pos[1] - TILESIZE))
         else:
             self.rect = self.image.get_rect(topleft=pos)

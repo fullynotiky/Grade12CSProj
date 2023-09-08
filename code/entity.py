@@ -3,7 +3,7 @@ from math import sin
 
 import pygame as pg
 
-from settings import *
+from globals import *
 
 
 class Entity(pg.sprite.Sprite, ABC):

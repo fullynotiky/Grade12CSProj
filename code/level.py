@@ -5,19 +5,18 @@ import pygame as pg
 
 from camera import CameraGroup
 from enemy import Enemy
-from magic import MagicPlayer
+from spells import SpellPlayer
 from particleEffect import AnimationPlayer
 from player import Player
-from settings import *
+from globals import *
 from tile import Tile
 from ui import UI
 from upgrade import Upgrade
 from utils import *
-from debug import debug
 from weapon import Weapon
 from leavesOverlay import Leaves
 from startMenu import StartMenu
-from playerScores import GameData
+from gameData import GameData
 
 chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
@@ -67,12 +66,12 @@ class Level:
         self.startMenu = StartMenu(self)
         self.ui = UI(self.player, self.startMenu)
         self.upgrade = Upgrade(self.player)
-        self.font = pg.font.Font(FONT, FONT_SIZE)
+        self.font = pg.font.Font(FONT_PATH, FONT_SIZE)
 
         self.x, self.y = self.visibleSprites.getOffset(self.player)
 
         self.animationPlayer = AnimationPlayer()
-        self.magicPlayer = MagicPlayer(self.animationPlayer, self.player)
+        self.magicPlayer = SpellPlayer(self.animationPlayer, self.player)
 
         self.deadPlayerSurf = pg.image.load('graphics\\ui\\dead.png').convert_alpha()
         self.deadPlayerSurf = pg.transform.scale(self.deadPlayerSurf, (350, 360))
@@ -92,15 +91,15 @@ class Level:
 
     def drawMap(self):
         layouts = {
-            BOUNDARY: getLayout('map\\map_FloorBlocks.csv'),
-            GRASS: getLayout('map\\map_Grass.csv'),
-            OBJECT: getLayout('map\\map_Objects.csv'),
-            ENTITIES: getLayout('map\\map_Entities.csv')
+            'boundary': getLayout('map\\map_FloorBlocks.csv'),
+            'grass': getLayout('map\\map_Grass.csv'),
+            'object': getLayout('map\\map_Objects.csv'),
+            'entities': getLayout('map\\map_Entities.csv')
         }
 
         graphics = {
-            GRASS: getFolder('graphics\\grass'),
-            OBJECT: getFolder('graphics\\objects')
+            'grass': getFolder('graphics\\grass'),
+            'object': getFolder('graphics\\objects')
         }
 
         for type, layout in layouts.items():
@@ -110,21 +109,21 @@ class Level:
                         x = j * TILESIZE
                         y = i * TILESIZE
 
-                        if type == BOUNDARY: Tile((x, y),
+                        if type == 'boundary': Tile((x, y),
                                                   (self.obstacleSprites,),
-                                                  INVISIBLE)
+                                                  'invisible')
 
-                        if type == GRASS: Tile((x, y),
+                        if type == 'grass': Tile((x, y),
                                                (self.visibleSprites, self.obstacleSprites, self.attackableSprites),
-                                               GRASS,
-                                               choice(graphics[GRASS]))
+                                               'grass',
+                                               choice(graphics['grass']))
 
-                        if type == OBJECT: Tile((x, y),
+                        if type == 'object': Tile((x, y),
                                                 (self.visibleSprites, self.obstacleSprites),
-                                                OBJECT,
-                                                graphics[OBJECT][int(element)])
+                                                'object',
+                                                graphics['object'][int(element)])
 
-                        if type == ENTITIES:
+                        if type == 'entities':
                             match element:
                                 case '390':
                                     monsterType = 'bamboo'
@@ -149,8 +148,8 @@ class Level:
     def toggleUpgradeMenu(self): self.gamePaused = not self.gamePaused
 
     def createMagic(self, style: str, strength: int, cost: int):
-        if style == HEAL: self.magicPlayer.heal(strength, cost, (self.visibleSprites,))
-        if style == FLAME: self.magicPlayer.flame(cost, (self.visibleSprites, self.attackSprites))
+        if style == 'heal': self.magicPlayer.heal(strength, cost, (self.visibleSprites,))
+        if style == 'flame': self.magicPlayer.flame(cost, (self.visibleSprites, self.attackSprites))
 
     def destroyWeapon(self):
         if self.currentWeapon: self.currentWeapon.kill()
@@ -163,7 +162,7 @@ class Level:
 
                 if collidingSprites:
                     for target in collidingSprites:
-                        if target.spriteType == GRASS:
+                        if target.spriteType == 'grass':
                             for _ in range(randint(3, 6)):
                                 self.animationPlayer.grassParticles(target.rect.center - pg.Vector2(0, 50),
                                                                     (self.visibleSprites,))

@@ -2,7 +2,7 @@ from random import choice
 
 import pygame as pg
 
-from settings import *
+from globals import *
 from utils import *
 
 
@@ -54,7 +54,7 @@ class ParticleEffect(pg.sprite.Sprite):
     def __init__(self, pos, frames, groups):
         super().__init__(groups)
 
-        self.spriteType = MAGIC
+        self.spriteType = 'spell'
         self.frameIndex = 0
         self.animationSpeed = 0.15
         self.frames = frames

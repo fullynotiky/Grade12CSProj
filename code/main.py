@@ -3,7 +3,7 @@ from os import chdir
 import pygame as pg
 
 from level import Level
-from settings import *
+from globals import *
 
 chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
@@ -61,8 +61,7 @@ class Game:
                             if rect.collidepoint(pos) and currTime - self.startMenu.clickTime > self.clickCooldown:
                                 self.startMenu.settingsMenuCommands[index]()
 
-                    if self.level.inGame:
-                        if self.level.ui.settingsRect.collidepoint(pos): self.level.startMenu.settingsFunc()
+                    if self.level.inGame and self.level.ui.settingsRect.collidepoint(pos): self.level.startMenu.settingsFunc()
 
             self.level.run()
 

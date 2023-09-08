@@ -2,7 +2,7 @@ import pygame as pg
 
 from player import Player
 from startMenu import StartMenu
-from settings import *
+from globals import *
 
 
 class UI:
@@ -10,7 +10,7 @@ class UI:
         self.startMenu = startMenu
 
         self.displaySurf = pg.display.get_surface()
-        self.font = pg.font.Font(FONT, FONT_SIZE)
+        self.font = pg.font.Font(FONT_PATH, FONT_SIZE)
 
         self.player = player
 
@@ -18,7 +18,7 @@ class UI:
         self.energyBarRect = pg.Rect(10, 35, ENERGY_BAR_WIDTH, BAR_HEIGHT)
 
         self.weaponGraphics = [pg.image.load(weapon['graphic']).convert_alpha() for weapon in WEAPONS.values()]
-        self.magicGraphics = [pg.image.load(magic['graphic']).convert_alpha() for magic in MAGICS.values()]
+        self.magicGraphics = [pg.image.load(magic['graphic']).convert_alpha() for magic in SPELLS.values()]
 
         self.settingsSurf = pg.transform.scale(self.startMenu.settingsSurf, (100, 30))
         self.settingsRect = self.settingsSurf.get_rect(center=(1200, 55))
@@ -74,8 +74,8 @@ class UI:
         self.displaySurf.blit(magicSurf, magicRect)
 
     def display(self):
-        self.displayBar(self.player.health, self.player.stats[HEALTH], self.healthBarRect, HEALTH_COLOR)
-        self.displayBar(self.player.energy, self.player.stats[ENERGY], self.energyBarRect, ENERGY_COLOR)
+        self.displayBar(self.player.health, self.player.stats['health'], self.healthBarRect, HEALTH_COLOR)
+        self.displayBar(self.player.energy, self.player.stats['energy'], self.energyBarRect, ENERGY_COLOR)
 
         self.displaySettingsButton()
         self.displayExp()

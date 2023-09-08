@@ -2,7 +2,7 @@ from os import chdir
 
 import pygame as pg
 
-from settings import *
+from globals import *
 
 chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj\\graphics')
 
@@ -12,10 +12,10 @@ class StartMenu:
         self.user = ''
         self.displaySurf = pg.display.get_surface()
 
-        self.largeFont = pg.font.Font(FONT, FONT_SIZE + 125)
-        self.mediumFont = pg.font.Font(FONT, FONT_SIZE + 45)
-        self.mediumSmallFont = pg.font.Font(FONT, FONT_SIZE + 25)
-        self.smallFont = pg.font.Font(FONT, FONT_SIZE + 5)
+        self.largeFont = pg.font.Font(FONT_PATH, FONT_SIZE + 125)
+        self.mediumFont = pg.font.Font(FONT_PATH, FONT_SIZE + 45)
+        self.mediumSmallFont = pg.font.Font(FONT_PATH, FONT_SIZE + 25)
+        self.smallFont = pg.font.Font(FONT_PATH, FONT_SIZE + 5)
 
         self.level = level
 

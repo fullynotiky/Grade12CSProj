@@ -1,7 +1,7 @@
 import pygame as pg
 
 from player import Player
-from settings import *
+from globals import *
 
 
 class CameraGroup(pg.sprite.Group):
@@ -35,6 +35,6 @@ class CameraGroup(pg.sprite.Group):
 
     def updateEnemy(self, player):
         enemySprites = [sprite for sprite in self.sprites() if (hasattr(sprite, 'spriteType')
-                                                                and sprite.spriteType == ENEMY)]
+                                                                and sprite.spriteType == 'enemy')]
         for sprite in enemySprites:
             sprite.enemyUpdate()

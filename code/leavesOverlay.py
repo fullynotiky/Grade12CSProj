@@ -1,7 +1,7 @@
 import pygame as pg
 from os import chdir
 from utils import *
-from settings import *
+from globals import *
 
 chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 

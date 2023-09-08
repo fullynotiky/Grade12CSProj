@@ -4,7 +4,7 @@ import pygame as pg
 
 from entity import Entity
 from player import Player
-from settings import *
+from globals import *
 from utils import *
 
 chdir('E:\\Harshith\\Python Programming\\School Stuff\\School Project')
@@ -31,8 +31,8 @@ class Enemy(Entity):
         self.monsterName = monsterName
         self.importGraphics()
 
-        self.state = IDLE
-        self.spriteType = ENEMY
+        self.state = 'idle'
+        self.spriteType = 'enemy'
         self.player = player
 
         # noinspection PyUnresolvedReferences
@@ -71,9 +71,9 @@ class Enemy(Entity):
 
     def importGraphics(self):
         self.animations = {
-            IDLE: [],
-            MOVE: [],
-            ATTACK: []
+            'idle': [],
+            'move': [],
+            'attack': []
         }
 
         subPath = f'graphics\\monsters\\{self.monsterName}\\'
@@ -91,19 +91,19 @@ class Enemy(Entity):
         distance = self.getPlayerPos()[0]
 
         if distance <= self.attackRadius and self.canAttack:
-            if self.state != ATTACK: self.frameIndex = 0
-            self.state = ATTACK
+            if self.state != 'attack': self.frameIndex = 0
+            self.state = 'attack'
         elif distance <= self.noticeRadius:
-            self.state = MOVE
+            self.state = 'move'
         else:
-            self.state = IDLE
+            self.state = 'idle'
 
     def actions(self):
-        if self.state == ATTACK and self.canAttack:
+        if self.state == 'attack' and self.canAttack:
             self.attackTime = pg.time.get_ticks()
             self.attackSound.play()
             self.damageToPlayer(self.attackDamage, self.attackType)
-        elif self.state == MOVE:
+        elif self.state == 'move':
             self.direction = self.getPlayerPos()[1]
         else:
             self.direction = pg.Vector2()
@@ -116,10 +116,10 @@ class Enemy(Entity):
         if self.isVulnerable:
             self.hitSound.play()
             self.direction = self.getPlayerPos()[1]
-            if attackType == WEAPON:
+            if attackType == 'weapon':
                 self.health -= player.getTotalWeaponDamage()
             else:
-                self.health -= self.player.getTotalMagicDamage()
+                self.health -= self.player.getTotalSpellDamage()
 
             self.damageTime = pg.time.get_ticks()
             self.isVulnerable = False
@@ -129,7 +129,7 @@ class Enemy(Entity):
         self.animation = self.animations[self.state]
 
         if self.frameIndex >= len(self.animation):
-            if self.state == ATTACK: self.canAttack = False
+            if self.state == 'attack': self.canAttack = False
             self.frameIndex = 0
 
         self.image = self.animation[int(self.frameIndex)]

@@ -1,16 +1,12 @@
-import json
-
-
-def getAllPlayerData():
-    with open('code\\playerData.json', 'r') as file: playerData = json.load(file)
-    return playerData
+from utils import getJsonFile
+from json import dump
 
 
 class GameData:
     def __init__(self, playerName: str):
         self.playerHighscore = 0
         self.playerName = playerName
-        self.allPlayerData = getAllPlayerData()
+        self.allPlayerData = getJsonFile('databases\\playerData.json')
         self.gameHighscore = self.getStats()
 
         if self.playerName not in self.allPlayerData: self.addNewPlayer(self.playerName)
@@ -49,5 +45,5 @@ class GameData:
                                                                                            'white')
 
         with open('code\\playerData.json', 'w') as file:
-            json.dump(self.allPlayerData, file, indent=2)
+            dump(self.allPlayerData, file, indent=2)
             file.write('\n')

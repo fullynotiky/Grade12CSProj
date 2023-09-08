@@ -1,7 +1,7 @@
 import pygame as pg
 
 from player import Player
-from settings import *
+from globals import *
 
 
 class Upgrade:
@@ -14,7 +14,7 @@ class Upgrade:
         self.nAttributes = len(self.player.stats)
         self.attributeNames = tuple(self.player.stats)
         self.maxValues = tuple(self.player.maxStats.values())
-        self.font = pg.font.Font(FONT, FONT_SIZE)
+        self.font = pg.font.Font(FONT_PATH, FONT_SIZE)
 
         self.selectedIndex = 0
         self.selectionTime = 0
