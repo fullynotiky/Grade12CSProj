@@ -20,7 +20,7 @@ class Player(Entity):
                  level) -> None:
 
         super().__init__(groups)
-
+        
         self.finalScoreRect = self.finalScoreSurf = self.animations = self.finalScoreTextSurf = None
         self.won = self.died = False
         self.finalScoreTextRect = None

@@ -16,13 +16,8 @@
   "abc": {
     "highscore": 340,
     "scores": [
-      340
-    ]
-  },
-  "test": {
-    "highscore": 680,
-    "scores": [
-      680
+      340,
+      0
     ]
   }
 }

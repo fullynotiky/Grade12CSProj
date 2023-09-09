@@ -295,4 +295,4 @@ class Level:
             self.startMenu.displayLoginPage(self.game.username)
 
         debug(f'inGame:{self.inGame}, settings: {self.inSettingsMenu}, inGameStart:{self.inGameStart}, startmenu:{self.inStartMenu},\
-    logged:{self.loggedIn}, user:{self.game.username}, died:{self.player.died}')
+logged:{self.loggedIn}, user:{self.game.username}, died:{self.player.died}')
