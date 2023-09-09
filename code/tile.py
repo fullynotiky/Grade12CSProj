@@ -8,7 +8,7 @@ chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
 
 class Tile(pg.sprite.Sprite):
-    def __init__(self, pos: tuple[int, int], groups, type, surf=pg.Surface((TILESIZE, TILESIZE))) -> None:
+    def __init__(self, pos: tuple[int, int], groups, type, surf=pg.Surface((TILESIZE, TILESIZE))):
         super().__init__(groups)
 
         self.spriteType = type

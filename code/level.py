@@ -22,7 +22,7 @@ chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
 
 class Level:
-    def __init__(self, game) -> None:
+    def __init__(self, game):
 
         self.gameHighscore = 0
         self.gameData = None

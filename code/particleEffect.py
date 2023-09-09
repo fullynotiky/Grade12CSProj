@@ -11,8 +11,6 @@ def reflectImages(frames): return [pg.transform.flip(frame, True, False) for fra
 
 class AnimationPlayer:
     def __init__(self):
-        self.flippedFrames = None
-
         self.frames = {
             'flame': getFolder('graphics/particles/flame/frames'),
             'aura': getFolder('graphics/particles/aura'),

@@ -5,7 +5,7 @@ from globals import *
 
 
 class CameraGroup(pg.sprite.Group):
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
 
         self.floorOffsetRect = None

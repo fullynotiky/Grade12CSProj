@@ -17,13 +17,12 @@ class Player(Entity):
                  createWeapon,
                  destroyWeapon,
                  createMagic,
-                 level) -> None:
+                 level):
 
         super().__init__(groups)
         
-        self.finalScoreRect = self.finalScoreSurf = self.animations = self.finalScoreTextSurf = None
+        self.finalScoreRect = self.finalScoreSurf = self.animations = None
         self.won = self.died = False
-        self.finalScoreTextRect = None
         self.font = pg.font.Font(FONT_PATH, FONT_SIZE + 25)
         self.image = pg.image.load('graphics\\test\\player.png').convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)

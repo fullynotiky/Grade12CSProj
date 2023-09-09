@@ -49,8 +49,7 @@ class Upgrade:
     def cooldown(self):
         if not self.canMove:
             currTime = pg.time.get_ticks()
-            if currTime - self.selectionTime >= self.selectionCooldown:
-                self.canMove = True
+            if currTime - self.selectionTime >= self.selectionCooldown: self.canMove = True
 
     def createItem(self):
         self.items = []
@@ -73,6 +72,7 @@ class Upgrade:
             value = tuple(self.player.stats.values())[index]
             maxValue = self.maxValues[index]
             cost = tuple(self.player.upgradeCosts.values())[index]
+
             item.display(self.selectedIndex, name, value, maxValue, cost)
 
 
