@@ -1,13 +1,9 @@
-from os import chdir
-
 import pygame as pg
 
 from entity import Entity
 from player import Player
 from globals import *
 from utils import *
-
-chdir('E:\\Harshith\\Python Programming\\School Stuff\\School Project')
 
 
 class Enemy(Entity):
@@ -35,7 +31,6 @@ class Enemy(Entity):
         self.spriteType = 'enemy'
         self.player = player
 
-        # noinspection PyUnresolvedReferences
         self.image = self.animations[self.state][self.frameIndex]
         self.rect: pg.Rect = self.image.get_rect(topleft=pos)
 
@@ -93,33 +88,26 @@ class Enemy(Entity):
         if distance <= self.attackRadius and self.canAttack:
             if self.state != 'attack': self.frameIndex = 0
             self.state = 'attack'
-        elif distance <= self.noticeRadius:
-            self.state = 'move'
-        else:
-            self.state = 'idle'
+        elif distance <= self.noticeRadius: self.state = 'move'
+        else: self.state = 'idle'
 
     def actions(self):
         if self.state == 'attack' and self.canAttack:
             self.attackTime = pg.time.get_ticks()
             self.attackSound.play()
             self.damageToPlayer(self.attackDamage, self.attackType)
-        elif self.state == 'move':
-            self.direction = self.getPlayerPos()[1]
-        else:
-            self.direction = pg.Vector2()
+        elif self.state == 'move': self.direction = self.getPlayerPos()[1]
+        else: self.direction = pg.Vector2()
 
     def damageReaction(self):
-        if not self.isVulnerable:
-            self.direction *= - self.resistance
+        if not self.isVulnerable: self.direction *= - self.resistance
 
     def getDamage(self, player: Player, attackType: str):
         if self.isVulnerable:
             self.hitSound.play()
             self.direction = self.getPlayerPos()[1]
-            if attackType == 'weapon':
-                self.health -= player.getTotalWeaponDamage()
-            else:
-                self.health -= self.player.getTotalSpellDamage()
+            if attackType == 'weapon': self.health -= player.getTotalWeaponDamage()
+            else: self.health -= self.player.getTotalSpellDamage()
 
             self.damageTime = pg.time.get_ticks()
             self.isVulnerable = False
@@ -135,20 +123,13 @@ class Enemy(Entity):
         self.image = self.animation[int(self.frameIndex)]
         self.rect = self.image.get_rect(center=self.hitbox.center)
 
-        if not self.isVulnerable:
-            self.image.set_alpha(self.player.getFlickerValue())
-        else:
-            self.image.set_alpha(255)
+        if not self.isVulnerable: self.image.set_alpha(self.player.getFlickerValue())
+        else: self.image.set_alpha(255)
 
     def cooldowns(self):
         currTime = pg.time.get_ticks()
-        if not self.canAttack:
-            if currTime - self.attackTime >= self.attackCooldown:
-                self.canAttack = True
-
-        if not self.isVulnerable:
-            if currTime - self.damageTime >= self.invincibilityPeriod:
-                self.isVulnerable = True
+        if not self.canAttack and currTime - self.attackTime >= self.attackCooldown: self.canAttack = True
+        if not self.isVulnerable and currTime - self.damageTime >= self.invincibilityPeriod: self.isVulnerable = True
 
     def deathFunc(self):
         self.kill()

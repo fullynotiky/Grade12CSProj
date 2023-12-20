@@ -55,8 +55,8 @@ class UI:
         if not (self.player.canChangeWeapon and self.player.canChangeMagic):
             pg.draw.rect(self.displaySurf, UI_BORDER_COLOR_ACTIVE, rect, 5)
 
-        else:
-            pg.draw.rect(self.displaySurf, UI_BORDER_COLOR, rect, 5)
+        else: pg.draw.rect(self.displaySurf, UI_BORDER_COLOR, rect, 5)
+
         return rect
 
     def weaponOverlay(self):

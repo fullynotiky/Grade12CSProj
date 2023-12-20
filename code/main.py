@@ -1,11 +1,8 @@
-from os import chdir
-
 import pygame as pg
 
+from os import chdir
 from level import Level
 from globals import *
-
-chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
 
 class Game:
@@ -40,10 +37,7 @@ class Game:
                         key = event.unicode
                         if key.isalnum() and ord(key) != 13 and len(self.username) <= 15: self.username += key
 
-                        if event.key == pg.K_RETURN:
-                            if len(self.username) < 15:
-                                self.level.loginFunc(self.username)
-                            else: ...
+                        if event.key == pg.K_RETURN and len(self.username) < 15: self.level.loginFunc(self.username)
 
                         if event.key == pg.K_BACKSPACE: self.username = self.username[:-2]
 

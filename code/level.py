@@ -1,8 +1,6 @@
-from os import chdir
-from random import choice, randint
-
 import pygame as pg
 
+from random import choice, randint
 from camera import CameraGroup
 from enemy import Enemy
 from spells import SpellPlayer
@@ -17,8 +15,6 @@ from weapon import Weapon
 from leavesOverlay import Leaves
 from startMenu import StartMenu
 from gameData import GameData
-
-chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
 
 class Level:
@@ -110,29 +106,25 @@ class Level:
                         y = i * TILESIZE
 
                         if type == 'boundary': Tile((x, y),
-                                                  (self.obstacleSprites,),
-                                                  'invisible')
+                                                    (self.obstacleSprites,),
+                                                    'invisible')
 
                         if type == 'grass': Tile((x, y),
-                                               (self.visibleSprites, self.obstacleSprites, self.attackableSprites),
-                                               'grass',
-                                               choice(graphics['grass']))
+                                                 (self.visibleSprites, self.obstacleSprites, self.attackableSprites),
+                                                 'grass',
+                                                 choice(graphics['grass']))
 
                         if type == 'object': Tile((x, y),
-                                                (self.visibleSprites, self.obstacleSprites),
-                                                'object',
-                                                graphics['object'][int(element)])
+                                                  (self.visibleSprites, self.obstacleSprites),
+                                                  'object',
+                                                  graphics['object'][int(element)])
 
                         if type == 'entities':
                             match element:
-                                case '390':
-                                    monsterType = 'bamboo'
-                                case '391':
-                                    monsterType = 'spirit'
-                                case '392':
-                                    monsterType = 'raccoon'
-                                case TypeError:
-                                    monsterType = 'squid'
+                                case '390': monsterType = 'bamboo'
+                                case '391': monsterType = 'spirit'
+                                case '392': monsterType = 'raccoon'
+                                case TypeError: monsterType = 'squid'
 
                             self.enemies.append(Enemy((self.visibleSprites, self.attackableSprites),
                                                       monsterType,
@@ -190,8 +182,7 @@ class Level:
 
     def dayNightFunc(self):
         time = pg.time.get_ticks()
-        # self.dayNum = time//20000  # every 20 secs
-        self.dayNum = time // 10000  # test
+        self.dayNum = time // 30000  # every 30sec
 
         self.alpha += 0.37
         if self.alpha >= 180: self.alpha = -180
@@ -244,8 +235,7 @@ class Level:
         print(self.startMenu.user)
 
     def exitFunc(self):
-        if not self.dataWritten:
-            if self.gameWon or self.player.died or self.inGame: self.gameData.end(self.player)
+        if (not self.dataWritten) and (self.gameWon or self.player.died or self.inGame): self.gameData.end(self.player)
         pg.quit()
         exit()
 
@@ -264,11 +254,9 @@ class Level:
             self.visibleSprites.draw(self.player)
             self.ui.display()
 
-            if self.inGameStart or self.inSettingsMenu:
-                self.startMenu.run()
+            if self.inGameStart or self.inSettingsMenu: self.startMenu.run()
 
-            elif self.gamePaused:
-                self.upgrade.display()
+            elif self.gamePaused: self.upgrade.display()
 
             elif self.inGame and self.inSettingsMenu:
                 self.inStartMenu = False
@@ -279,8 +267,7 @@ class Level:
                 self.playerDeath()
                 self.displayScore()
 
-            elif self.dayNum >= 3:
-                self.endGameFunc()
+            elif self.dayNum >= 3: self.endGameFunc()
 
             else:
                 self.displayScore()
@@ -291,8 +278,6 @@ class Level:
 
                 if self.loggedIn: self.dayNightFunc()
 
-        else:
-            self.startMenu.displayLoginPage(self.game.username)
+        else: self.startMenu.displayLoginPage(self.game.username)
 
-        debug(f'inGame:{self.inGame}, settings: {self.inSettingsMenu}, inGameStart:{self.inGameStart}, startmenu:{self.inStartMenu},\
-logged:{self.loggedIn}, user:{self.game.username}, died:{self.player.died}')
+        debug(f'test')

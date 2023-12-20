@@ -1,7 +1,6 @@
-from random import choice
-
 import pygame as pg
 
+from random import choice
 from globals import *
 from utils import *
 
@@ -61,10 +60,7 @@ class ParticleEffect(pg.sprite.Sprite):
 
     def animate(self):
         self.frameIndex += self.animationSpeed
-        if self.frameIndex >= len(self.frames):
-            self.kill()
-        else:
-            self.image = self.frames[int(self.frameIndex)]
+        if self.frameIndex >= len(self.frames): self.kill()
+        else: self.image = self.frames[int(self.frameIndex)]
 
-    def update(self):
-        self.animate()
+    def update(self): self.animate()

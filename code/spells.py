@@ -1,13 +1,9 @@
-from os import chdir
-from random import randint
-
 import pygame as pg
 
+from random import randint
 from particleEffect import AnimationPlayer
 from player import Player
 from globals import *
-
-chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
 
 class SpellPlayer:
@@ -25,8 +21,7 @@ class SpellPlayer:
             self.player.health += strength
             self.player.energy -= cost
 
-            if self.player.health >= self.player.stats['health']:
-                self.player.health = self.player.stats['health']
+            if self.player.health >= self.player.stats['health']: self.player.health = self.player.stats['health']
 
             self.sounds['heal'].play()
             self.animationPlayer.createParticles('aura',
@@ -40,14 +35,10 @@ class SpellPlayer:
         if self.player.energy >= cost:
             self.player.energy -= cost
 
-            if self.player.state.split('_')[0] == 'up':
-                direc = pg.Vector2(0, -1)
-            elif self.player.state.split('_')[0] == 'down':
-                direc = pg.Vector2(0, 1)
-            elif self.player.state.split('_')[0] == 'right':
-                direc = pg.Vector2(1, 0)
-            else:
-                direc = pg.Vector2(-1, 0)
+            if self.player.state.split('_')[0] == 'up': direc = pg.Vector2(0, -1)
+            elif self.player.state.split('_')[0] == 'down': direc = pg.Vector2(0, 1)
+            elif self.player.state.split('_')[0] == 'right': direc = pg.Vector2(1, 0)
+            else: direc = pg.Vector2(-1, 0)
 
             self.sounds['flame'].play()
 

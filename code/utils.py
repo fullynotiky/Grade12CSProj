@@ -1,7 +1,7 @@
-import json
-from csv import reader
-from os import walk
+from json import load
 
+from os import walk
+from csv import reader
 from pygame import image, display, init
 from pygame.draw import rect
 from pygame.font import Font
@@ -27,9 +27,7 @@ def getLayout(path: str):
 
     with open(path) as file:
         layout = reader(file, delimiter=',')
-
-        for row in layout:
-            map.append(list(row))
+        for row in layout: map.append(list(row))
 
     return map
 
@@ -48,4 +46,4 @@ def getFolder(path):
 
 def getJsonFile(path: str):
     with open(path, 'r') as file:
-        return json.load(file)
+        return load(file)

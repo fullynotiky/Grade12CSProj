@@ -1,10 +1,6 @@
-from os import chdir
-
 import pygame as pg
 
 from globals import *
-
-chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj\\graphics')
 
 
 class StartMenu:
@@ -128,14 +124,12 @@ class StartMenu:
                 if keys[pg.K_UP]:
                     self.volume += 5
                     self.clickTime = pg.time.get_ticks()
-                    if self.volume >= 100:
-                        self.volume = 100
+                    if self.volume >= 100: self.volume = 100
 
                 if keys[pg.K_DOWN]:
                     self.volume -= 5
                     self.clickTime = pg.time.get_ticks()
-                    if self.volume <= 0:
-                        self.volume = 0
+                    if self.volume <= 0: self.volume = 0
 
     def settingsFunc(self):
         self.clickTime = pg.time.get_ticks()
@@ -180,10 +174,8 @@ class StartMenu:
     def run(self):
         self.displayMainOverlay(self.level.inSettingsMenu)
 
-        if self.level.inStartMenu:
-            self.displayStartMenu()
+        if self.level.inStartMenu: self.displayStartMenu()
 
-        if self.level.inSettingsMenu:
-            self.displaySettingsMenu()
+        if self.level.inSettingsMenu: self.displaySettingsMenu()
 
         self.input()

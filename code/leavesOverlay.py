@@ -1,9 +1,8 @@
 import pygame as pg
+
 from os import chdir
 from utils import *
 from globals import *
-
-chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
 
 
 class Leaves(pg.sprite.Sprite):
@@ -28,5 +27,4 @@ class Leaves(pg.sprite.Sprite):
         self.rect = self.image.get_rect(center=(WIDTH//2, HEIGHT//2))
         self.displaySurf.blit(self.image, self.rect)
 
-    def run(self):
-        self.leavesOverlay()
+    def run(self): self.leavesOverlay()

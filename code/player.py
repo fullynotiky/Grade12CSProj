@@ -6,8 +6,6 @@ from entity import Entity
 from globals import *
 from utils import *
 
-chdir('E:\\Harshith\\Python Programming\\School Stuff\\Grade12CSProj')
-
 
 class Player(Entity):
     def __init__(self,
@@ -96,20 +94,12 @@ class Player(Entity):
         if not self.isAttacking:
             keys = pg.key.get_pressed()
 
-            if keys[pg.K_w]:
-                self.state = 'up'
-                self.direction.y = -1
-            elif keys[pg.K_s]:
-                self.state = 'down'
-                self.direction.y = 1
+            if keys[pg.K_w]: self.state, self.direction.y = 'up', -1
+            elif keys[pg.K_s]: self.state, self.direction.y = 'down', 1
             else: self.direction.y = 0
 
-            if keys[pg.K_d]:
-                self.state = 'right'
-                self.direction.x = 1
-            elif keys[pg.K_a]:
-                self.state = 'left'
-                self.direction.x = -1
+            if keys[pg.K_d]: self.state, self.direction.x = 'right', 1
+            elif keys[pg.K_a]: self.state, self.direction.x = 'left', -1
             else: self.direction.x = 0
 
             if keys[pg.K_SPACE]:

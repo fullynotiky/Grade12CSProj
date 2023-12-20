@@ -1,8 +1,7 @@
-from abc import ABC
-from math import sin
-
 import pygame as pg
 
+from abc import ABC
+from math import sin
 from globals import *
 
 
@@ -15,8 +14,7 @@ class Entity(pg.sprite.Sprite, ABC):
         self.animationSpeed = 0.15
 
     def checkDeath(self, command):
-        if self.health <= 0:
-            command()
+        if self.health <= 0: command()
 
     def collision(self, direction):
         if direction == HORIZONTAL:
@@ -52,8 +50,5 @@ class Entity(pg.sprite.Sprite, ABC):
 
     @staticmethod
     def getFlickerValue():
-        val = sin(pg.time.get_ticks())
-        if val >= 0:
-            return 255
-        else:
-            return 0
+        if sin(pg.time.get_ticks()) >= 0: return 255
+        else: return 0
