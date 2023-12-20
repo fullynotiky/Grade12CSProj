@@ -6,15 +6,15 @@ from enemy import Enemy
 from spells import SpellPlayer
 from particleEffect import AnimationPlayer
 from player import Player
-from globals import *
 from tile import Tile
 from ui import UI
 from upgrade import Upgrade
-from utils import *
 from weapon import Weapon
 from leavesOverlay import Leaves
 from startMenu import StartMenu
 from gameData import GameData
+from globals import *
+from utils import *
 
 
 class Level:
@@ -267,7 +267,7 @@ class Level:
                 self.playerDeath()
                 self.displayScore()
 
-            elif self.dayNum >= 3: self.endGameFunc()
+            elif self.dayNum >= 7: self.endGameFunc()  # 7days to win
 
             else:
                 self.displayScore()

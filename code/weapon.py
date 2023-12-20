@@ -8,7 +8,6 @@ from os import chdir
 class Weapon(pg.sprite.Sprite):
     def __init__(self, groups, player: Player):
         super().__init__(groups)
-
         self.spriteType = 'weapon'
         direction = player.state.split('_')[0]
         path = f'graphics\\weapons\\{player.weapon}\\{direction}.png'

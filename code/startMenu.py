@@ -173,9 +173,6 @@ class StartMenu:
 
     def run(self):
         self.displayMainOverlay(self.level.inSettingsMenu)
-
         if self.level.inStartMenu: self.displayStartMenu()
-
         if self.level.inSettingsMenu: self.displaySettingsMenu()
-
         self.input()

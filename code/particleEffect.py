@@ -27,18 +27,12 @@ class AnimationPlayer:
             'bamboo': getFolder('graphics/particles/bamboo'),
 
             'leaf': (
-                getFolder('graphics/particles/leaf1'),
-                getFolder('graphics/particles/leaf2'),
-                getFolder('graphics/particles/leaf3'),
-                getFolder('graphics/particles/leaf4'),
-                getFolder('graphics/particles/leaf5'),
-                getFolder('graphics/particles/leaf6'),
-                reflectImages(getFolder('graphics/particles/leaf1')),
-                reflectImages(getFolder('graphics/particles/leaf2')),
-                reflectImages(getFolder('graphics/particles/leaf3')),
-                reflectImages(getFolder('graphics/particles/leaf4')),
-                reflectImages(getFolder('graphics/particles/leaf5')),
-                reflectImages(getFolder('graphics/particles/leaf6'))
+                getFolder('graphics/particles/leaf1'), getFolder('graphics/particles/leaf2'),
+                getFolder('graphics/particles/leaf3'), getFolder('graphics/particles/leaf4'),
+                getFolder('graphics/particles/leaf5'), getFolder('graphics/particles/leaf6'),
+                reflectImages(getFolder('graphics/particles/leaf1')), reflectImages(getFolder('graphics/particles/leaf2')),
+                reflectImages(getFolder('graphics/particles/leaf3')), reflectImages(getFolder('graphics/particles/leaf4')),
+                reflectImages(getFolder('graphics/particles/leaf5')), reflectImages(getFolder('graphics/particles/leaf6'))
             )
         }
 
@@ -50,7 +44,6 @@ class AnimationPlayer:
 class ParticleEffect(pg.sprite.Sprite):
     def __init__(self, pos, frames, groups):
         super().__init__(groups)
-
         self.spriteType = 'spell'
         self.frameIndex = 0
         self.animationSpeed = 0.15

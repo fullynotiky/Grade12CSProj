@@ -8,11 +8,10 @@ from globals import *
 class UI:
     def __init__(self, player: Player, startMenu: StartMenu):
         self.startMenu = startMenu
+        self.player = player
 
         self.displaySurf = pg.display.get_surface()
         self.font = pg.font.Font(FONT_PATH, FONT_SIZE)
-
-        self.player = player
 
         self.healthBarRect = pg.Rect(10, 10, HEALTH_BAR_WIDTH, BAR_HEIGHT)
         self.energyBarRect = pg.Rect(10, 35, ENERGY_BAR_WIDTH, BAR_HEIGHT)
@@ -32,7 +31,6 @@ class UI:
         newRect.width = width
 
         pg.draw.rect(self.displaySurf, color, newRect)  # filling
-
         pg.draw.rect(self.displaySurf, UI_BORDER_COLOR, newRect, 3)  # border
 
     def displaySettingsButton(self):
@@ -54,15 +52,12 @@ class UI:
 
         if not (self.player.canChangeWeapon and self.player.canChangeMagic):
             pg.draw.rect(self.displaySurf, UI_BORDER_COLOR_ACTIVE, rect, 5)
-
         else: pg.draw.rect(self.displaySurf, UI_BORDER_COLOR, rect, 5)
-
         return rect
 
     def weaponOverlay(self):
-        rect = self.selectedBox(10, 570)
         weaponSurf = self.weaponGraphics[self.player.weaponIndex]
-        weaponRect = weaponSurf.get_rect(center=rect.center)
+        weaponRect = weaponSurf.get_rect(center=self.selectedBox(10, 570).center)
 
         self.displaySurf.blit(weaponSurf, weaponRect)
 

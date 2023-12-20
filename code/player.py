@@ -1,5 +1,3 @@
-from os import chdir
-
 import pygame as pg
 
 from entity import Entity
@@ -93,7 +91,6 @@ class Player(Entity):
     def input(self):
         if not self.isAttacking:
             keys = pg.key.get_pressed()
-
             if keys[pg.K_w]: self.state, self.direction.y = 'up', -1
             elif keys[pg.K_s]: self.state, self.direction.y = 'down', 1
             else: self.direction.y = 0

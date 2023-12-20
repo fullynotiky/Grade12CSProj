@@ -19,7 +19,6 @@ class GameData:
             highscore = currPlayerDate['highscore']
             allHighscores.append(highscore)
             if name == self.playerName: self.playerHighscore = highscore
-
         return max(allHighscores)
 
     def addNewPlayer(self, playerName: str):

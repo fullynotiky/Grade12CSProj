@@ -10,7 +10,7 @@ class Game:
         pg.init()
 
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
-        pg.display.set_caption("Grade12CSProj")
+        pg.display.set_caption("Grade12 CS Proj")
 
         self.username = ''
         self.clickCooldown = 300
@@ -56,9 +56,7 @@ class Game:
                                 self.startMenu.settingsMenuCommands[index]()
 
                     if self.level.inGame and self.level.ui.settingsRect.collidepoint(pos): self.level.startMenu.settingsFunc()
-
             self.level.run()
-
             pg.display.update()
             self.clock.tick(FPS)
 
