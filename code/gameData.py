@@ -15,25 +15,14 @@ class GameData:
     def getStats(self):
         allHighscores = []
         for name in self.allPlayerData:
-            currPlayerDate = self.allPlayerData[name]
-            highscore = currPlayerDate['highscore']
-            allHighscores.append(highscore)
+            allHighscores.append(self.allPlayerData[name]['highscore'])
             if name == self.playerName: self.playerHighscore = highscore
         return max(allHighscores)
 
-    def addNewPlayer(self, playerName: str):
-        self.allPlayerData[playerName] = {
-            'highscore': 0,
-            'scores': []
-        }
-
-    def updateHighscores(self):
-        for name in self.allPlayerData:
-            scores = []
-            scores.extend(self.allPlayerData[name])
+    def addNewPlayer(self, playerName: str): self.allPlayerData[playerName] = {'highscore': 0, 'scores': []}
 
     def end(self, player):
-        self.allPlayerData[self.playerName]['scores'].append(abs(player.score))
+        self.allPlayerData[self.playerName]['scores'].append(abs(int(player.score)))
         newHighscore = max(self.allPlayerData[self.playerName]['scores'])
         self.allPlayerData[self.playerName]['highscore'] = newHighscore
 

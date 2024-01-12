@@ -103,10 +103,7 @@ class Level:
             'entities': getLayout('map\\map_Entities.csv')
         }
 
-        graphics = {
-            'grass': getFolder('graphics\\grass'),
-            'object': getFolder('graphics\\objects')
-        }
+        graphics = {'grass': getFolder('graphics\\grass'), 'object': getFolder('graphics\\objects')}
 
         for type, layout in layouts.items():
             for i, row in enumerate(layout):
@@ -266,21 +263,19 @@ class Level:
             self.visibleSprites.draw(self.player)
             self.ui.display()
 
-            if self.inGameStart or self.inSettingsMenu:
-                self.startMenu.run()
+            if self.inGameStart or self.inSettingsMenu: self.startMenu.run()
 
             elif self.gamePaused:
-                pos2 = 450
-
+                pos1 = 450
                 for k, c in self.controls[0].items():
                     f = font.render(str(k + ' : ' + c), True, 'White')
                     width, height = f.get_rect().size
 
                     s = pg.Surface(size=(width + 2 * padX, height + 2 * padY))
                     s.blit(f, (padX, padX))
-                    display.get_surface().blit(s, (pos2, 9))
+                    display.get_surface().blit(s, (pos1, 9))
 
-                    pos2 = pos2 + width + 2 * padX + 10
+                    pos1 = pos1 + width + 2 * padX + 10
 
                 self.upgrade.display()
 
@@ -304,17 +299,16 @@ class Level:
                 self.leavesOverlay.run()
 
                 if self.loggedIn: self.dayNightFunc()
-                pos1 = 225
 
+                pos2 = 225
                 for k, c in self.controls[1].items():
                     f = font.render(str(k + ' : ' + c), True, 'White')
                     width, height = f.get_rect().size
 
                     s = pg.Surface(size=(width + 2 * padX, height + 2 * padY))
                     s.blit(f, (padX, padX))
-                    display.get_surface().blit(s, (pos1, 9))
+                    display.get_surface().blit(s, (pos2, 9))
 
-                    pos1 = pos1 + width + 2 * padX + 10
+                    pos2 = pos2 + width + 2 * padX + 10
 
-        else:
-            self.startMenu.displayLoginPage(self.game.username)
+        else: self.startMenu.displayLoginPage(self.game.username)

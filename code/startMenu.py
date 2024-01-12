@@ -71,8 +71,7 @@ class StartMenu:
 
         self.volume = 10
         self.volume2 = self.volume
-        self.maxVolume = 100
-        self.volumeCoolDown = 100
+        self.maxVolume = self.volumeCoolDown = 100
 
         self.level.inGame = False
 
@@ -87,23 +86,20 @@ class StartMenu:
         self.entryRect = self.entrySurf.get_rect(center=(WIDTH//2, 350))
         self.entrySurf.fill('white')
 
-        self.userSurf = self.smallFont.render('enter username:', True, 'white')
+        self.userSurf = self.smallFont.render('Type username and press enter', True, 'white')
 
     def displayLoginPage(self, userEntered):
-        text = self.smallFont.render(userEntered, True, 'black')
-
         self.displaySurf.blit(self.loginSurf, (-10, 0))
         self.displaySurf.blit(self.blackTransparentOverlay, (0, 0))
         self.displaySurf.blit(self.gameNameSurf, self.gameNameRect)
+        pg.draw.rect(self.displaySurf, 'black', (390, 295, 510, 30))
 
         self.displaySurf.blit(self.entrySurf, self.entryRect)
-        self.displaySurf.blit(text, (500, 335))
-        pg.draw.rect(self.displaySurf, 'black', (490, 295, 270, 30))
-        self.displaySurf.blit(self.userSurf, (495, 295))
+        self.displaySurf.blit(self.smallFont.render(userEntered, True, 'black'), (500, 335))
+        self.displaySurf.blit(self.userSurf, (395, 295))
 
     def playFunc(self):
-        self.level.inGameStart = False
-        self.level.inStartMenu = False
+        self.level.inGameStart = self.level.inStartMenu = False
         self.level.inGame = True
 
     def muteFunc(self):

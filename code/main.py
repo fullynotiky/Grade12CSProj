@@ -34,8 +34,8 @@ class Game:
 
                     if not self.level.loggedIn:
                         key = event.unicode
-                        if key.isalnum() and ord(key) != 13 and len(self.username) <= 15: self.username += key
-                        if event.key == pg.K_RETURN and len(self.username) < 15: self.level.loginFunc(self.username)
+                        if key.isalnum() and (ord(key) != 13) and (len(self.username) <= 15): self.username += key
+                        if (event.key == pg.K_RETURN) and (0 < len(self.username) < 15): self.level.loginFunc(self.username)
                         if event.key == pg.K_BACKSPACE: self.username = self.username[:-2]
 
                 if event.type == pg.MOUSEBUTTONDOWN:
