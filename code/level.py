@@ -41,6 +41,16 @@ class Level:
         self.dayNightSurf.fill('black')
         self.dayNightSurf.set_alpha(self.alpha)
 
+        self.controls = ({'Space': 'Upgrade',
+                          'A': 'Navigate Left',
+                          'D': 'Navigate Right'},
+                         {'Q': 'Change weapon',
+                          'Space': 'Attack',
+                          'E': 'Change Spell',
+                          'C': 'Upgrade Menu',
+                          'Esc': 'Exit',
+                          'R Control': 'Use Spell'})
+
         self.visibleSprites = CameraGroup()
         self.obstacleSprites = pg.sprite.Group()
         self.attackSprites = pg.sprite.Group()
@@ -102,8 +112,7 @@ class Level:
             for i, row in enumerate(layout):
                 for j, element in enumerate(row):
                     if element != '-1':
-                        x = j * TILESIZE
-                        y = i * TILESIZE
+                        x, y = j * TILESIZE, i * TILESIZE
 
                         if type == 'boundary': Tile((x, y),
                                                     (self.obstacleSprites,),
@@ -121,10 +130,12 @@ class Level:
 
                         if type == 'entities':
                             match element:
-                                case '390': monsterType = 'bamboo'
-                                case '391': monsterType = 'spirit'
-                                case '392': monsterType = 'raccoon'
-                                case TypeError: monsterType = 'squid'
+                                case '390':
+                                    monsterType = 'bamboo'
+                                case '392':
+                                    monsterType = 'raccoon'
+                                case TypeError:
+                                    monsterType = 'squid'
 
                             self.enemies.append(Enemy((self.visibleSprites, self.attackableSprites),
                                                       monsterType,
@@ -135,7 +146,8 @@ class Level:
                                                       self.deathParticles,
                                                       self.updatePlayerEXP))
 
-    def createWeapon(self): self.currentWeapon = Weapon((self.visibleSprites, self.attackSprites), self.player)
+    def createWeapon(self):
+        self.currentWeapon = Weapon((self.visibleSprites, self.attackSprites), self.player)
 
     def toggleUpgradeMenu(self): self.gamePaused = not self.gamePaused
 
@@ -159,7 +171,8 @@ class Level:
                                 self.animationPlayer.grassParticles(target.rect.center - pg.Vector2(0, 50),
                                                                     (self.visibleSprites,))
                             target.kill()
-                        else: target.getDamage(self.player, sprite.spriteType)
+                        else:
+                            target.getDamage(self.player, sprite.spriteType)
 
     def damageToPlayer(self, amount, attackType):
         if self.player.isVulnerable:
@@ -171,9 +184,11 @@ class Level:
                                                  self.player.rect.center,
                                                  (self.visibleSprites,))
 
-    def deathParticles(self, pos, particleType): self.animationPlayer.createParticles(particleType, pos, (self.visibleSprites,))
+    def deathParticles(self, pos, particleType):
+        self.animationPlayer.createParticles(particleType, pos, (self.visibleSprites,))
 
-    def updatePlayerEXP(self, amount: int): self.player.exp += amount
+    def updatePlayerEXP(self, amount: int):
+        self.player.exp += amount
 
     def displayScore(self):
         scoreSurf = self.font.render(f'SCORE: {abs(int(self.player.score))}', True, 'white')
@@ -189,7 +204,6 @@ class Level:
 
         self.dayNightSurf.set_alpha(abs(self.alpha))
         self.display.blit(self.dayNightSurf, (0, 0))
-        debug(int(self.dayNum))
 
     def gameEndOverlay(self):
         self.startMenu.transparentOverlay.set_alpha(200)
@@ -230,9 +244,7 @@ class Level:
         self.gameData = GameData(username)
         self.playerHighscore = self.gameData.playerHighscore
         self.gameHighscore = self.gameData.gameHighscore
-        print(self.playerHighscore, self.gameHighscore)
         self.startMenu.highScoreSurf = self.startMenu.smallFont.render(f'HIGHSCORE: {self.playerHighscore}', True, 'white')
-        print(self.startMenu.user)
 
     def exitFunc(self):
         if (not self.dataWritten) and (self.gameWon or self.player.died or self.inGame): self.gameData.end(self.player)
@@ -254,9 +266,23 @@ class Level:
             self.visibleSprites.draw(self.player)
             self.ui.display()
 
-            if self.inGameStart or self.inSettingsMenu: self.startMenu.run()
+            if self.inGameStart or self.inSettingsMenu:
+                self.startMenu.run()
 
-            elif self.gamePaused: self.upgrade.display()
+            elif self.gamePaused:
+                pos2 = 450
+
+                for k, c in self.controls[0].items():
+                    f = font.render(str(k + ' : ' + c), True, 'White')
+                    width, height = f.get_rect().size
+
+                    s = pg.Surface(size=(width + 2 * padX, height + 2 * padY))
+                    s.blit(f, (padX, padX))
+                    display.get_surface().blit(s, (pos2, 9))
+
+                    pos2 = pos2 + width + 2 * padX + 10
+
+                self.upgrade.display()
 
             elif self.inGame and self.inSettingsMenu:
                 self.inStartMenu = False
@@ -267,7 +293,8 @@ class Level:
                 self.playerDeath()
                 self.displayScore()
 
-            elif self.dayNum >= 7: self.endGameFunc()  # 7days to win
+            elif self.dayNum >= 7:
+                self.endGameFunc()  # 7days to win
 
             else:
                 self.displayScore()
@@ -277,7 +304,17 @@ class Level:
                 self.leavesOverlay.run()
 
                 if self.loggedIn: self.dayNightFunc()
+                pos1 = 225
 
-        else: self.startMenu.displayLoginPage(self.game.username)
+                for k, c in self.controls[1].items():
+                    f = font.render(str(k + ' : ' + c), True, 'White')
+                    width, height = f.get_rect().size
 
-        debug(f'test')
+                    s = pg.Surface(size=(width + 2 * padX, height + 2 * padY))
+                    s.blit(f, (padX, padX))
+                    display.get_surface().blit(s, (pos1, 9))
+
+                    pos1 = pos1 + width + 2 * padX + 10
+
+        else:
+            self.startMenu.displayLoginPage(self.game.username)

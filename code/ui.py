@@ -55,11 +55,8 @@ class UI:
         else: pg.draw.rect(self.displaySurf, UI_BORDER_COLOR, rect, 5)
         return rect
 
-    def weaponOverlay(self):
-        weaponSurf = self.weaponGraphics[self.player.weaponIndex]
-        weaponRect = weaponSurf.get_rect(center=self.selectedBox(10, 570).center)
-
-        self.displaySurf.blit(weaponSurf, weaponRect)
+    def weaponOverlay(self): self.displaySurf.blit(weaponSurf := self.weaponGraphics[self.player.weaponIndex],
+                                                   weaponSurf.get_rect(center=self.selectedBox(10, 570).center))
 
     def magicOverlay(self):
         rect = self.selectedBox(15 + ITEM_BOX_SIZE, 570)

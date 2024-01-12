@@ -13,10 +13,7 @@ class StartMenu:
         self.mediumSmallFont = pg.font.Font(FONT_PATH, FONT_SIZE + 25)
         self.smallFont = pg.font.Font(FONT_PATH, FONT_SIZE + 5)
 
-        self.level = level
-
-        self.frameIndex = 0
-        self.animationSpeed = 0.15
+        self.frameIndex, self.animationSpeed, self.level = 0, 0.15, level
 
         self.gameNameSurf = self.largeFont.render('ZELDA', True, 'blue')
         self.gameNameSurf = pg.transform.scale(self.gameNameSurf, (420, 150))

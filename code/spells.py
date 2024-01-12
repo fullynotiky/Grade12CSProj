@@ -11,10 +11,8 @@ class SpellPlayer:
         self.animationPlayer = animationPlayer
         self.player = player
 
-        self.sounds = {
-            'heal': pg.mixer.Sound('audio\\heal.wav'),
-            'flame': pg.mixer.Sound('audio\\Fire.wav')
-        }
+        self.sounds = {'heal': pg.mixer.Sound('audio\\heal.wav'),
+                       'flame': pg.mixer.Sound('audio\\Fire.wav')}
 
     def heal(self, strength: int, cost: int, groups):
         if self.player.energy >= cost:

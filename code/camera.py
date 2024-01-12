@@ -16,15 +16,10 @@ class CameraGroup(pg.sprite.Group):
         self.floorRect = self.floorSurf.get_rect(topleft=(0, 0))
 
     @staticmethod
-    def getOffset(player):
-        x = player.rect.centerx - WIDTH // 2
-        y = player.rect.centery - HEIGHT // 2
-
-        return x, y
+    def getOffset(player): return player.rect.centerx - WIDTH // 2, player.rect.centery - HEIGHT // 2
 
     def draw(self, player: Player, **kwargs):
-        self.offset.x = player.rect.centerx - WIDTH // 2
-        self.offset.y = player.rect.centery - HEIGHT // 2
+        self.offset.x, self.offset.y = player.rect.centerx - WIDTH // 2, player.rect.centery - HEIGHT // 2
 
         self.floorOffsetRect = self.floorRect.topleft - self.offset
         self.display.blit(self.floorSurf, self.floorOffsetRect)
@@ -36,5 +31,4 @@ class CameraGroup(pg.sprite.Group):
     def updateEnemy(self, player):
         enemySprites = [sprite for sprite in self.sprites() if (hasattr(sprite, 'spriteType')
                                                                 and sprite.spriteType == 'enemy')]
-        for sprite in enemySprites:
-            sprite.enemyUpdate()
+        for sprite in enemySprites: sprite.enemyUpdate()

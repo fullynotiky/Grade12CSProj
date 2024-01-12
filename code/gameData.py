@@ -41,6 +41,7 @@ class GameData:
             player.level.startMenu.highScoreSurf = player.level.startMenu.smallFont.render(f'HIGHSCORE: {self.playerHighscore}',
                                                                                            True,
                                                                                            'white')
+
         with open('databases\\playerData.json', 'w') as file:
             dump(self.allPlayerData, file, indent=2)
             file.write('\n')

@@ -16,15 +16,12 @@ class Upgrade:
         self.maxValues = tuple(self.player.maxStats.values())
         self.font = pg.font.Font(FONT_PATH, FONT_SIZE)
 
-        self.selectedIndex = 0
-        self.selectionTime = 0
+        self.selectedIndex = self.selectionTime = 0
         self.selectionCooldown = 200
         self.canMove = True
 
-        self.gameHeight = HEIGHT
-        self.gameWidth = WIDTH
-        self.height = self.gameHeight * 0.8
-        self.width = self.gameWidth // (self.nAttributes + 1)
+        self.height = HEIGHT * 0.8
+        self.width = WIDTH // (self.nAttributes + 1)
 
         self.createItem()
 
@@ -55,13 +52,11 @@ class Upgrade:
         self.items = []
 
         for item in range(self.nAttributes):
-            padding = self.gameWidth // self.nAttributes
-            left = (item * padding) + (padding - self.gameWidth) // 2 + 535
+            padding = WIDTH // self.nAttributes
+            left = (item * padding) + (padding - WIDTH) // 2 + 535
+            top = HEIGHT * 0.1
 
-            top = self.gameHeight * 0.1
-
-            item = Item(left, top, self.width, self.height, item, self.font)
-            self.items.append(item)
+            self.items.append(Item(left, top, self.width, self.height, item, self.font))
 
     def display(self):
         self.input()
@@ -109,9 +104,8 @@ class Item:
 
     def updateBars(self, player: Player):
         upgradeAttr = tuple(player.stats)[self.index]
+        cost, maxUpgrade = player.upgradeCosts[upgradeAttr], player.maxStats[upgradeAttr]
 
-        cost = player.upgradeCosts[upgradeAttr]
-        maxUpgrade = player.maxStats[upgradeAttr]
         if player.exp >= cost and player.stats[upgradeAttr] < maxUpgrade:
             player.exp -= cost
             player.inExp -= cost

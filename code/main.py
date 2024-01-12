@@ -26,8 +26,7 @@ class Game:
     def run(self):
         while True:
             for event in pg.event.get():
-                if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                    self.level.exitFunc()
+                if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE): self.level.exitFunc()
 
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_c and (self.level.player.died or self.level.gameWon or self.level.loggedIn):
@@ -36,9 +35,7 @@ class Game:
                     if not self.level.loggedIn:
                         key = event.unicode
                         if key.isalnum() and ord(key) != 13 and len(self.username) <= 15: self.username += key
-
                         if event.key == pg.K_RETURN and len(self.username) < 15: self.level.loginFunc(self.username)
-
                         if event.key == pg.K_BACKSPACE: self.username = self.username[:-2]
 
                 if event.type == pg.MOUSEBUTTONDOWN:

@@ -2,19 +2,16 @@ import pygame as pg
 
 from player import Player
 from globals import *
-from os import chdir
 
 
 class Weapon(pg.sprite.Sprite):
     def __init__(self, groups, player: Player):
         super().__init__(groups)
+
         self.spriteType = 'weapon'
         direction = player.state.split('_')[0]
         path = f'graphics\\weapons\\{player.weapon}\\{direction}.png'
-
-        if player.weapon == 'axe' and direction == 'left': self.image = pg.transform.rotozoom(pg.image.load(path).convert_alpha(),
-                                                                                              180, 1)
-        else: self.image = pg.image.load(path).convert_alpha()
+        self.image = pg.image.load(path).convert_alpha()
 
         if direction == 'right': self.rect = self.image.get_rect(midleft=player.rect.midright + pg.Vector2(0, 16))
         elif direction == 'left': self.rect = self.image.get_rect(midright=player.rect.midleft + pg.Vector2(0, 16))

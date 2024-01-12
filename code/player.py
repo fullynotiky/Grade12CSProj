@@ -34,7 +34,7 @@ class Player(Entity):
         self.weaponChangeCooldown = 200
         self.weaponSwitchTime = 0
         self.isAttacking = False
-        self.attackCooldown = 400  # ms
+        self.attackCooldown = 400
         self.attackTime = 0
 
         self.createMagic = createMagic
@@ -47,14 +47,14 @@ class Player(Entity):
         self.obstacles = obstacles
 
         self.stats = {
-            'health': 100,
+            'health': 300,
             'energy': 60,
             'speed': 7,
             'attack': 10,
             'spell': 5
         }
         self.maxStats = {
-            'health': 300,
+            'health': 500,
             'energy': 140,
             'speed': 15,
             'attack': 20,
@@ -70,11 +70,9 @@ class Player(Entity):
 
         self.speed = self.stats['speed']
         self.health = self.stats['health']
-        self.health = 300
         self.energy = self.stats['energy']
-        self.exp = 3000
-        self.inExp = 3000
-        self.score = self.inExp - self.exp
+        self.exp = self.inExp = 500
+        self.score = 0
 
         self.importAssets()
 

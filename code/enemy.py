@@ -37,16 +37,11 @@ class Enemy(Entity):
         self.hitbox = self.rect.inflate(-10, -10)
 
         self.obstacles = obstacles
-
         self.monster = MONSTERS[self.monsterName]
-        self.health = self.monster['health']
-        self.exp = self.monster['exp']
-        self.speed = self.monster['speed']
-        self.attackDamage = self.monster['damage']
-        self.resistance = self.monster['resistance']
-        self.attackRadius = self.monster['attack_radius']
-        self.noticeRadius = self.monster['notice_radius']
         self.attackType = self.monster['attack_type']
+        self.health, self.exp, self.speed = self.monster['health'], self.monster['exp'], self.monster['speed']
+        self.attackDamage, self.resistance = self.monster['damage'], self.monster['resistance']
+        self.attackRadius, self.noticeRadius = self.monster['attack_radius'], self.monster['notice_radius']
 
         self.canAttack = True
         self.attackTime = 0

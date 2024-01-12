@@ -1,6 +1,5 @@
 import pygame as pg
 
-from os import chdir
 from utils import *
 from globals import *
 

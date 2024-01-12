@@ -8,16 +8,17 @@ from pygame.font import Font
 
 init()
 
-font = Font(None, 30)
+font = Font(None, 23)
+padX = padY = 10
 
 
 def debug(info, y=10, x=10):
-    display_surface = display.get_surface()
-    debug_surf = font.render(str(info), True, 'White')
-    debug_rect = debug_surf.get_rect(topleft=(x, y))
+    displaySurf = display.get_surface()
+    debugSurf = font.render(str(info), True, 'White')
+    debugRect = debugSurf.get_rect(topleft=(x, y))
 
-    rect(display_surface, 'Black', debug_rect)
-    display_surface.blit(debug_surf, debug_rect)
+    rect(displaySurf, 'Black', debugRect)
+    displaySurf.blit(debugSurf, debugRect)
 
 
 def getLayout(path: str):
