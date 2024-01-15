@@ -211,7 +211,7 @@ class Level:
 
         self.display.blit(self.player.finalScoreTextSurf, self.player.finalScoreTextRect)
 
-        finalScoreSurf = self.player.font.render(str(abs(self.player.score)), True, 'white')
+        finalScoreSurf = self.player.font.render(str(int(abs(self.player.score))), True, 'white')
         finalScoreRect = finalScoreSurf.get_rect(center=(180, 430))
 
         self.display.blit(finalScoreSurf, finalScoreRect)
@@ -263,6 +263,9 @@ class Level:
             self.visibleSprites.draw(self.player)
             self.ui.display()
 
+            if self.dayNum >= 4:
+                self.endGameFunc()  # 4days to win
+
             if self.inGameStart or self.inSettingsMenu: self.startMenu.run()
 
             elif self.gamePaused:
@@ -273,6 +276,7 @@ class Level:
 
                     s = pg.Surface(size=(width + 2 * padX, height + 2 * padY))
                     s.blit(f, (padX, padX))
+
                     display.get_surface().blit(s, (pos1, 9))
 
                     pos1 = pos1 + width + 2 * padX + 10
@@ -288,9 +292,6 @@ class Level:
                 self.playerDeath()
                 self.displayScore()
 
-            elif self.dayNum >= 7:
-                self.endGameFunc()  # 7days to win
-
             else:
                 self.displayScore()
                 self.visibleSprites.update()
@@ -298,7 +299,7 @@ class Level:
                 self.playerAttack()
                 self.leavesOverlay.run()
 
-                if self.loggedIn: self.dayNightFunc()
+                if self.loggedIn and self.inGame: self.dayNightFunc()
 
                 pos2 = 225
                 for k, c in self.controls[1].items():

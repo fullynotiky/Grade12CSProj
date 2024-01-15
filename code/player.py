@@ -47,14 +47,14 @@ class Player(Entity):
         self.obstacles = obstacles
 
         self.stats = {
-            'health': 300,
+            'health': 180,
             'energy': 60,
-            'speed': 7,
+            'speed': 5,
             'attack': 10,
             'spell': 5
         }
         self.maxStats = {
-            'health': 500,
+            'health': 350,
             'energy': 140,
             'speed': 15,
             'attack': 20,
@@ -71,7 +71,7 @@ class Player(Entity):
         self.speed = self.stats['speed']
         self.health = self.stats['health']
         self.energy = self.stats['energy']
-        self.exp = self.inExp = 500
+        self.exp = self.inExp = 5000
         self.score = 0
 
         self.importAssets()
@@ -226,7 +226,7 @@ class Player(Entity):
     def deathFunc(self):
         self.died = True
         self.level.inGame = self.level.inGameStart = self.level.inStartMenu = self.level.inSettingsMenu = False
-        self.finalScoreSurf = self.font.render(str(abs(self.score)), True, 'white')
+        self.finalScoreSurf = self.font.render(str(int(abs(self.score))), True, 'white')
         self.finalScoreRect = self.finalScoreSurf.get_rect(center=(180, 430))
 
     def update(self):

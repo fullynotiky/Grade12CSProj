@@ -1,6 +1,6 @@
 {
   "squid": {
-    "health": 100,
+    "health": 150,
     "exp": 100,
     "damage": 20,
     "attack_type": "slash",
@@ -8,7 +8,7 @@
     "speed": 3,
     "resistance": 3,
     "attack_radius": 80,
-    "notice_radius": 360
+    "notice_radius": 1500
   },
   "raccoon": {
     "health": 300,
@@ -19,7 +19,7 @@
     "speed": 2,
     "resistance": 3,
     "attack_radius": 120,
-    "notice_radius": 400
+    "notice_radius": 1550
   },
   "spirit": {
     "health": 100,
@@ -30,10 +30,10 @@
     "speed": 4,
     "resistance": 3,
     "attack_radius": 60,
-    "notice_radius": 350
+    "notice_radius": 1200
   },
   "bamboo": {
-    "health": 70,
+    "health": 100,
     "exp": 120,
     "damage": 6,
     "attack_type": "leaf_attack",
@@ -41,6 +41,6 @@
     "speed": 3,
     "resistance": 3,
     "attack_radius": 50,
-    "notice_radius": 300
+    "notice_radius": 1500
   }
 }

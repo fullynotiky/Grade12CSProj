@@ -15,7 +15,7 @@ class GameData:
     def getStats(self):
         allHighscores = []
         for name in self.allPlayerData:
-            allHighscores.append(self.allPlayerData[name]['highscore'])
+            allHighscores.append(highscore := self.allPlayerData[name]['highscore'])
             if name == self.playerName: self.playerHighscore = highscore
         return max(allHighscores)
 

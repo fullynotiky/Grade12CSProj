@@ -1,6 +1,5 @@
 import pygame as pg
 
-from os import chdir
 from level import Level
 from globals import *
 
@@ -29,14 +28,13 @@ class Game:
                 if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE): self.level.exitFunc()
 
                 if event.type == pg.KEYDOWN:
-                    if event.key == pg.K_c and (self.level.player.died or self.level.gameWon or self.level.loggedIn):
-                        self.level.toggleUpgradeMenu()
+                    if event.key == pg.K_c and self.level.inGame: self.level.toggleUpgradeMenu()
 
                     if not self.level.loggedIn:
                         key = event.unicode
                         if key.isalnum() and (ord(key) != 13) and (len(self.username) <= 15): self.username += key
                         if (event.key == pg.K_RETURN) and (0 < len(self.username) < 15): self.level.loginFunc(self.username)
-                        if event.key == pg.K_BACKSPACE: self.username = self.username[:-2]
+                        if event.key == pg.K_BACKSPACE: self.username = self.username[:-1]
 
                 if event.type == pg.MOUSEBUTTONDOWN:
                     currTime = pg.time.get_ticks()
