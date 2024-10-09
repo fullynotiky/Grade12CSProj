@@ -199,7 +199,7 @@ class Level:
         self.alpha += 0.37
         if self.alpha >= 180: self.alpha = -180
 
-        self.dayNightSurf.set_alpha(abs(self.alpha))
+        self.dayNightSurf.set_alpha(int(abs(self.alpha)))
         self.display.blit(self.dayNightSurf, (0, 0))
 
     def gameEndOverlay(self):

@@ -71,7 +71,7 @@ class Player(Entity):
         self.speed = self.stats['speed']
         self.health = self.stats['health']
         self.energy = self.stats['energy']
-        self.exp = self.inExp = 5000
+        self.exp = self.inExp = 500
         self.score = 0
 
         self.importAssets()
